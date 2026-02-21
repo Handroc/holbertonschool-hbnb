@@ -17,7 +17,7 @@
 
 ## 📄 <span id="description">Description</span>
 
-This project features a well-organized, modular structure with a clear separation of concerns across the Presentation, Business Logic, and Persistence layers. It is built using Flask and prepares the architecture for future integration of API endpoints and a database-backed persistence layer.
+This project features a well-organized structure across the Presentation, Business Logic, and Persistence layers. It is built using Flask and prepares the architecture for future integration of API endpoints and a database-backed persistence layer.
 
 The application utilizes the Facade design pattern to manage communication between the Presentation, Business Logic, and Persistence layers. Currently, an in-memory repository handles object storage and validation, which will act as a placeholder until it is replaced by a database-backed solution using SQLAlchemy in later stages.
 
