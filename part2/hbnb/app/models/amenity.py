@@ -1,16 +1,20 @@
 from datetime import datetime, timezone
+from uuid import uuid4
 
 
 class Amenity:
     def __init__(
         self,
-        amenity_id,
         name,
-        description,
+        description="",
+        amenity_id=None,
         created_at=None,
         updated_at=None
     ):
-        self.id = amenity_id
+        if amenity_id:
+            self.id = amenity_id
+        else:
+            self.id = str(uuid4())
         self.name = name
         self.description = description
         if created_at is None:

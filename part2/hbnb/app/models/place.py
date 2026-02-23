@@ -1,20 +1,24 @@
 from datetime import datetime, timezone
+from uuid import uuid4
 
 
 class Place:
     def __init__(
         self,
-        place_id,
         title,
-        description,
-        price,
-        latitude,
-        longitude,
-        owner,
+        description="",
+        price=0,
+        latitude=None,
+        longitude=None,
+        owner=None,
+        place_id=None,
         created_at=None,
         updated_at=None
     ):
-        self.id = place_id
+        if place_id:
+            self.id = place_id
+        else:
+            self.id = str(uuid4())
         self.title = title
         self.description = description
         self.price = price
