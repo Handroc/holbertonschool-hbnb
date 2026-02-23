@@ -10,3 +10,7 @@ class Review(BaseModel):
         """different ids to link"""
         self.place_id = place_id
         self.user_id = user_id
+
+    def valid_review(self):
+        """Control the rating wich is between 1 and 5"""
+        return 1 <= self.rating <= 5
