@@ -11,20 +11,11 @@ class Amenity:
         created_at=None,
         updated_at=None
     ):
-        if amenity_id:
-            self.id = amenity_id
-        else:
-            self.id = str(uuid4())
+        self.id = amenity_id or str(uuid4())
         self.name = name
         self.description = description
-        if created_at is None:
-            self.created_at = datetime.now(timezone.utc)
-        else:
-            self.created_at = created_at
-        if updated_at is None:
-            self.updated_at = datetime.now(timezone.utc)
-        else:
-            self.updated_at = updated_at
+        self.created_at = created_at or datetime.now(timezone.utc)
+        self.updated_at = updated_at or datetime.now(timezone.utc)
 
     def __str__(self):
         """Return a readable string representation of the Amenity."""

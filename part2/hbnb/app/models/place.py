@@ -15,24 +15,15 @@ class Place:
         created_at=None,
         updated_at=None
     ):
-        if place_id:
-            self.id = place_id
-        else:
-            self.id = str(uuid4())
+        self.id = place_id or str(uuid4())
         self.title = title
         self.description = description
         self.price = price
         self.latitude = latitude
         self.longitude = longitude
         self.owner = owner
-        if created_at is None:
-            self.created_at = datetime.now(timezone.utc)
-        else:
-            self.created_at = created_at
-        if updated_at is None:
-            self.updated_at = datetime.now(timezone.utc)
-        else:
-            self.updated_at = updated_at
+        self.created_at = created_at or datetime.now(timezone.utc)
+        self.updated_at = updated_at or datetime.now(timezone.utc)
         self.reviews = []  # List to store related reviews
         self.amenities = []  # List to store related amenities
 
@@ -43,14 +34,6 @@ class Place:
     def add_amenity(self, amenity):
         """Add an amenity to the place."""
         self.amenities.append(amenity)
-
-    def get_reviews(self):
-        """Return the list of reviews for the place."""
-        return self.reviews
-
-    def get_amenities(self):
-        """Return the list of amenities for the place."""
-        return self.amenities
 
     def remove_review(self, review):
         """Remove a review from the place."""
