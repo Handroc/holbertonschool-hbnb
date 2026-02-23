@@ -9,15 +9,3 @@ class User(BaseModel):
         self.email = email
         self.password = password
         self.is_admin = is_admin
-
-        """different ids to link"""
-        self.place_ids = []
-        self.review_ids = []
-
-    def add_place(self, place):
-        """Add a place to the User"""
-        self.place_ids.append(place)
-    
-    def add_review(self, review):
-        """Add a review to the User"""
-        self.review_ids.append(review)
