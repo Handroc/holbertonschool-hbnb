@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+import datetime
 from uuid import uuid4
 
 
@@ -14,8 +14,8 @@ class Amenity:
         self.id = amenity_id or str(uuid4())
         self.name = name
         self.description = description
-        self.created_at = created_at or datetime.now(timezone.utc)
-        self.updated_at = updated_at or datetime.now(timezone.utc)
+        self.created_at = created_at or datetime.now()
+        self.updated_at = updated_at or datetime.now()
 
     def __str__(self):
         """Return a readable string representation of the Amenity."""

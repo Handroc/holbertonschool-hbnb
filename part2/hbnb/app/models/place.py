@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+import datetime
 from uuid import uuid4
 
 
@@ -22,8 +22,8 @@ class Place:
         self.latitude = latitude
         self.longitude = longitude
         self.owner = owner
-        self.created_at = created_at or datetime.now(timezone.utc)
-        self.updated_at = updated_at or datetime.now(timezone.utc)
+        self.created_at = created_at or datetime.now()
+        self.updated_at = updated_at or datetime.now()
         self.reviews = []
         self.amenities = []
 

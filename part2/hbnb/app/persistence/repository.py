@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from datetime import datetime, timezone
+import datetime
 
 class Repository(ABC):
     @abstractmethod
@@ -49,7 +49,7 @@ class InMemoryRepository(Repository):
                     setattr(obj, key, value)
                     has_changes = True
             if has_changes:
-                obj.updated_at = datetime.now(timezone.utc)
+                obj.updated_at = datetime.now()
 
     def delete(self, obj_id):
         if obj_id in self._storage:
