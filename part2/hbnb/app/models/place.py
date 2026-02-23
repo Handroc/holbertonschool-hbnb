@@ -24,8 +24,8 @@ class Place:
         self.owner = owner
         self.created_at = created_at or datetime.now(timezone.utc)
         self.updated_at = updated_at or datetime.now(timezone.utc)
-        self.reviews = []  # List to store related reviews
-        self.amenities = []  # List to store related amenities
+        self.reviews = []
+        self.amenities = []
 
     def add_review(self, review):
         """Add a review to the place."""
