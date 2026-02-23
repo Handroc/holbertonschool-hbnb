@@ -40,6 +40,14 @@ class Place:
         """Add an amenity to the place."""
         self.amenities.append(amenity)
 
+    def get_reviews(self):
+        """Return the list of reviews for the place."""
+        return self.reviews
+
+    def get_amenities(self):
+        """Return the list of amenities for the place."""
+        return self.amenities
+
     def remove_review(self, review):
         """Remove a review from the place."""
         if review in self.reviews:
@@ -49,3 +57,11 @@ class Place:
         """Remove an amenity from the place."""
         if amenity in self.amenities:
             self.amenities.remove(amenity)
+
+    def __str__(self):
+        """Return a readable string representation of the Place."""
+        return f"[Place] {self.title} ({self.id})"
+
+    def __repr__(self):
+        """Return the official string representation of the Place."""
+        return f"Place(id='{self.id}', title='{self.title}')"
