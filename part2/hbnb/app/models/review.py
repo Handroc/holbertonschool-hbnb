@@ -4,9 +4,9 @@ from .user import User
 from .place import Place
 
 class Review(BaseModel):
-    def __init__(self, comment="", rating=1, place=Place, user=User):
+    def __init__(self, text="", rating=1, place=Place, user=User):
         super().__init__()
-        self.comment = comment
+        self.text = text
         self.rating = rating
         self.place = place
         self.user = user

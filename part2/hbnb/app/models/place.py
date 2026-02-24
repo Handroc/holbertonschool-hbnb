@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-import datetime
+from datetime import datetime
 from uuid import uuid4
-=======
-#!/usr/bin/env python3
-from .base_model import BaseModel
->>>>>>> 4eb6957 (fix: modify import models to pass the tests)
 
 
 class Place:
