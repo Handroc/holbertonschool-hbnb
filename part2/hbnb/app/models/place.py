@@ -30,20 +30,24 @@ class Place:
     def add_review(self, review):
         """Add a review to the place."""
         self.reviews.append(review)
+        self.updated_at = datetime.now()
 
     def add_amenity(self, amenity):
         """Add an amenity to the place."""
         self.amenities.append(amenity)
+        self.updated_at = datetime.now()
 
     def remove_review(self, review):
         """Remove a review from the place."""
         if review in self.reviews:
             self.reviews.remove(review)
+            self.updated_at = datetime.now()
 
     def remove_amenity(self, amenity):
         """Remove an amenity from the place."""
         if amenity in self.amenities:
             self.amenities.remove(amenity)
+            self.updated_at = datetime.now()
 
     def __str__(self):
         """Return a readable string representation of the Place."""
