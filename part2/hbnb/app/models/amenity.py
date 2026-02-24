@@ -1,21 +1,15 @@
-from datetime import datetime
-from uuid import uuid4
+from base_model import BaseModel
 
 
-class Amenity:
+class Amenity(BaseModel):
     def __init__(
         self,
         name,
         description="",
-        amenity_id=None,
-        created_at=None,
-        updated_at=None
     ):
-        self.id = amenity_id or str(uuid4())
+        super().__init__()
         self.name = name
         self.description = description
-        self.created_at = created_at or datetime.now()
-        self.updated_at = updated_at or datetime.now()
 
     def __str__(self):
         """Return a readable string representation of the Amenity."""
