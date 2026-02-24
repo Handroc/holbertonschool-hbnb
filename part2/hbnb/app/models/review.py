@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 from .base_model import BaseModel
+from .user import User
+from .place import Place
 
 class Review(BaseModel):
-    def __init__(self, comment, rating, place, user):
+    def __init__(self, comment="", rating=1, place=Place, user=User):
         super().__init__()
         self.comment = comment
         self.rating = rating
