@@ -50,6 +50,8 @@ class InMemoryRepository(Repository):
                     has_changes = True
             if has_changes:
                 obj.updated_at = datetime.now()
+                return obj
+        return None
 
     def delete(self, obj_id):
         if obj_id in self._storage:
