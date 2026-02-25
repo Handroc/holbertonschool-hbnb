@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-import datetime
 
 class Repository(ABC):
     @abstractmethod
@@ -42,14 +41,9 @@ class InMemoryRepository(Repository):
 
     def update(self, obj_id, data):
         obj = self.get(obj_id)
-        if obj:
-            has_changes = False
-            for key, value in data.items():
-                if hasattr(obj, key):
-                    setattr(obj, key, value)
-                    has_changes = True
-            if has_changes:
-                obj.updated_at = datetime.now()
+        if not obj:
+            raise ValueError("Object doesn't exist")
+        obj.update(data)
 
     def delete(self, obj_id):
         if obj_id in self._storage:
