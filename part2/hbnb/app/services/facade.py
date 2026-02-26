@@ -10,6 +10,8 @@ class HBnBFacade:
         self.review_repo = InMemoryRepository()
         self.amenity_repo = InMemoryRepository()
 
+################ AMENITY #####################
+
     def create_amenity(self, amenity_data):
         amenity_data = dict(amenity_data)
         name = amenity_data.get("name")
@@ -38,6 +40,8 @@ class HBnBFacade:
 
         amenity.update(amenity_data)
         return amenity
+
+################ PLACE ##################### 
 
     def create_place(self, place_data):
         place_data = dict(place_data)
