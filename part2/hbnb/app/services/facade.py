@@ -21,6 +21,12 @@ class HBnBFacade:
         if not user:
             raise ValueError("User not found")
         return user
+    
+    def get_all_users(self):
+        users = self.user_repo.get_all()
+        if not users:
+            raise ValueError("No users found")
+        return users
 
     def get_user_by_email(self, email):
         user = self.user_repo.get_by_attribute('email', email)
