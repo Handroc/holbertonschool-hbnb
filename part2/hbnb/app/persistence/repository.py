@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-import datetime
+
 
 class Repository(ABC):
     @abstractmethod
@@ -42,18 +42,18 @@ class InMemoryRepository(Repository):
 
     def update(self, obj_id, data):
         obj = self.get(obj_id)
-        if obj:
-            has_changes = False
-            for key, value in data.items():
-                if hasattr(obj, key):
-                    setattr(obj, key, value)
-                    has_changes = True
-            if has_changes:
-                obj.updated_at = datetime.now()
+        if not obj:
+            raise ValueError("Object doesn't exist")
+        obj.update(data)
 
     def delete(self, obj_id):
         if obj_id in self._storage:
             del self._storage[obj_id]
 
     def get_by_attribute(self, attr_name, attr_value):
-        return next((obj for obj in self._storage.values() if getattr(obj, attr_name, None) == attr_value), None)
+        results = [obj for obj in self._storage.values() if getattr(obj, attr_name, None) == attr_value]
+        if len(results) == 1:
+            return results[0]
+        elif len(results) > 1:
+            return results
+        return None
