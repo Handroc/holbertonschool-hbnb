@@ -73,7 +73,7 @@ class Place(BaseModel):
     @latitude.setter
     def latitude(self, latitude):
         if latitude is not None:
-            if not (isinstance(latitude, (int,float))):
+            if not (isinstance(latitude, (int, float))):
                 raise TypeError("Latitude must be a number")
             if not (-90 <= latitude <= 90):
                 raise ValueError("Latitude must be between -90 and 90")
@@ -82,7 +82,7 @@ class Place(BaseModel):
     @longitude.setter
     def longitude(self, longitude):
         if longitude is not None:
-            if not (isinstance(longitude, (int,float))):
+            if not (isinstance(longitude, (int, float))):
                 raise TypeError("Longitude must be a number")
             if not (-180 <= longitude <= 180):
                 raise ValueError("Longitude must be between -180 and 180")
@@ -105,7 +105,7 @@ class Place(BaseModel):
             raise TypeError("review must be a Review")
         if review not in self.reviews:
             self.reviews.append(review)
-        self.save()
+            self.save()
 
     def add_amenity(self, amenity):
         """Add an amenity to the place."""
@@ -114,7 +114,7 @@ class Place(BaseModel):
             raise TypeError("amenity must be an Amenity")
         if amenity not in self.amenities:
             self.amenities.append(amenity)
-        self.save()
+            self.save()
 
     def remove_review(self, review):
         """Remove a review from the place."""

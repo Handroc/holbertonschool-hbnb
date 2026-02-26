@@ -3,10 +3,10 @@ from app.services import facade
 
 api = Namespace('amenities', description='Amenity operations')
 
-# Define the amenity model for input validation and documentation
 amenity_model = api.model('Amenity', {
     'name': fields.String(required=True, description='Name of the amenity')
 })
+
 
 @api.route('/')
 class AmenityList(Resource):
@@ -26,6 +26,7 @@ class AmenityList(Resource):
         """Retrieve a list of all amenities"""
         all_amenities = facade.get_all_amenities()
         return [x.to_dict() for x in all_amenities], 200
+
 
 @api.route('/<amenity_id>')
 class AmenityResource(Resource):
