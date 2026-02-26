@@ -38,3 +38,53 @@ class UserResource(Resource):
         if not user:
             return {'error': 'User not found'}, 404
         return {'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name, 'email': user.email}, 200
+
+    def get_mail(email):
+        """Get user details by email"""
+        user = facade.get_user_by_email(email)
+        if not user:
+            return {'error': 'User not found'}, 404
+        return {'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name, 'email': user.email}, 200
+
+    def put(self, user_id):
+        """Modify the entire details of the user by ID"""
+        user = facade.get_user(user_id)
+        updated_user = facade.put_user(user_id, api.payload)
+        if not user:
+            return {'error': 'User not found'}, 404
+        return {
+        'id': updated_user.id,
+        'first_name': updated_user.first_name,
+        'last_name': updated_user.last_name,
+        'email': updated_user.email
+        }, 200
+    
+    def patch_user(self, user_id):
+        """Modify a specific detail of user"""
+        user = facade.get_user(user_id)
+        if not user:
+            return {'error': 'User not found'}, 404
+        
+        payload = api.payload or {}
+
+        if 'email' in payload:
+            existing_user = facade.get_user_by_email(payload['email'])
+            if existing_user and existing_user.id != user_id:
+                return {'error': 'Email already taken'}, 400
+        
+        updated_user = facade.patch(user_id, payload)
+
+        return {
+            'id': updated_user.id,
+            'first_name': updated_user.first_name,
+            'last_name': updated_user.last_name,
+            'email': updated_user.email
+        }, 200
+
+    def delete(self, user_id):
+        """Delete user"""
+        user = facade.get_user(user_id)
+        if not user:
+            return {'error': 'User not found'}, 404
+        facade.delete_user(user_id)
+        return {'message': 'User deleted'}, 200
