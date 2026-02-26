@@ -10,6 +10,10 @@ class HBnBFacade:
 ################ USER ##################### 
 
     def create_user(self, user_data):
+        email = user_data.get('email')
+        existing_user = self.get_by_attribute('email', email)
+        if existing_user:
+            raise ValueError("User already exists")
         user = User(**user_data)
         if not user:
             raise ValueError("Invalid user data")
