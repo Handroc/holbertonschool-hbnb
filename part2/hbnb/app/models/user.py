@@ -58,8 +58,6 @@ class User(BaseModel):
     def password(self, value):
         if not isinstance(value, str):
             raise ValueError("Password must be a string")
-        if not value:
-            raise ValueError("Password cannot be empty")
         self._password = value
     
     @is_admin.setter
