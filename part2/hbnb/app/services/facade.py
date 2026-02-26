@@ -119,48 +119,92 @@ class HBnBFacade:
 ################ USER ##################### 
 
     def create_user(self, user_data):
+        user_data = dict(user_data)
+        email = user_data.get("email")
+        if not email:
+            raise ValueError("Email is required")
+        existing = self.user_repo.get_by_attribute("email", email)
+        if existing:
+            raise ValueError("Email is already used")
+
         user = User(**user_data)
         self.user_repo.add(user)
         return user
 
     def get_user(self, user_id):
         return self.user_repo.get(user_id)
+    
+    def get_all_users(self):
+        return self.user_repo.get_all()
 
     def get_user_by_email(self, email):
         return self.user_repo.get_by_attribute('email', email)
-    
-    def put_user(self, user_id, data):
-        return self.user_repo.update(user_id, data)
-    
-    def patch(self, user_id: str, data: dict):
-        if 'email' in data:
-            existing_user = self.get_user_by_email(data['email'])
-            if existing_user and existing_user.id != user_id:
-                return None
-        updated_user = self.user_repo.update(user_id, data)
-        return updated_user
 
+    def update_user(self, user_id, user_data):
+        user_data = dict(user_data)
+        user = self.user_repo.get(user_id)
+        if not user:
+            raise ValueError("User not found")
+
+        if "email" in user_data:
+            existing = self.user_repo.get_by_attribute("email", user_data["email"])
+            if existing and existing.id != user_id:
+                raise ValueError("Email is already used")
+
+        user.update(user_data)
+        return user
+    
     def delete_user(self, user_id):
-        return self.user_repo.delete(user_id)
+        user = self.user_repo.get(user_id)
+        if not user:
+            raise ValueError("User not found")
+        self.user_repo.delete(user_id)
 
 ############### REVIEW ########################
 
     def create_review(self, review_data):
+        review_data = dict(review_data)
+
+        user_id = review_data.get("user_id")
+        place_id = review_data.get("place_id")
+        if not user_id:
+            raise ValueError("User is required")
+        if not place_id:
+            raise ValueError("Place is required")
+        if not self.user_repo.get(user_id):
+            raise ValueError("User not found")
+        if not self.place_repo.get(place_id):
+            raise ValueError("Place not found")
+
         review = Review(**review_data)
         self.review_repo.add(review)
         return review
     
     def get_review(self, review_id):
         return self.review_repo.get(review_id)
-    
-    def get_review_by_user(self, user):
-        return self.review_repo.get_by_attribute('user', user)
 
-    def put_review(self, review_id, data):
-        return self.review_repo.update(review_id, data)
+    def get_all_reviews(self):
+        return self.review_repo.get_all()
     
-    def patch_review(self, review_id: str, data: dict):
-        return self.review_repo.update(review_id, data)
+    def get_review_by_place(self, place_id):
+        return self.review_repo.get_by_attribute('place_id', place_id)
+
+    def update_review(self, review_id, review_data):
+        review_data = dict(review_data)
+        review = self.review_repo.get(review_id)
+        if not review:
+            raise ValueError("Review not found")
+
+        if "user_id" in review_data and not self.user_repo.get(review_data["user_id"]):
+            raise ValueError("User not found")
+        if "place_id" in review_data and not self.place_repo.get(review_data["place_id"]):
+            raise ValueError("Place not found")
+
+        review.update(review_data)
+        return review
     
     def delete_review(self, review_id):
-        return self.review_repo.delete(review_id)
+        review = self.review_repo.get(review_id)
+        if not review:
+            raise ValueError("Review not found")
+        self.review_repo.delete(review_id)

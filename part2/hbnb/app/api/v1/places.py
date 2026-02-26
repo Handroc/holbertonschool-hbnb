@@ -70,3 +70,14 @@ class PlaceResource(Resource):
             return {"Error": str(e)}, 400
         except TypeError as e:
             return {"Error": str(e)}, 404
+
+@api.route('/<place_id>/reviews')
+class PlaceReviewList(Resource):
+    @api.response(200, 'List of reviews for the place retrieved successfully')
+    @api.response(404, 'Place not found')
+    def get(self, place_id):
+        """Get all reviews for a specific place"""
+        place = facade.get_place(place_id)
+        if not place:
+            return {"Error": "Place not found"}, 404
+        return [x.to_dict() for x in place.reviews], 200

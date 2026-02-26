@@ -49,38 +49,13 @@ class UserResource(Resource):
     def put(self, user_id):
         """Update entire user details by ID"""
         try:
-            user = facade.put_user(user_id, api.payload)
+            user = facade.update_user(user_id, api.payload)
             return user.to_dict(), 200
         except ValueError as e:
+            if "not found" in str(e).lower():
+                return {"Error": str(e)}, 404
             return {"Error": str(e)}, 400
         except TypeError as e:
-            return {"Error": str(e)}, 404
-
-    @api.expect(user_model)
-    @api.response(200, 'User partially updated successfully')
-    @api.response(404, 'User not found')
-    @api.response(400, 'Invalid input data or email already taken')
-    def patch(self, user_id):
-        """Update specific user details by ID"""
-        try:
-            user = facade.patch_user(user_id, api.payload)
-            if not user:
-                return {"Error": "User not found"}, 404
-            return user.to_dict(), 200
-        except ValueError as e:
-            return {"Error": str(e)}, 400
-
-    @api.response(200, 'User deleted successfully')
-    @api.response(404, 'User not found')
-    def delete(self, user_id):
-        """Delete a user"""
-        try:
-            user = facade.get_user(user_id)
-            if not user:
-                return {"Error": "User not found"}, 404
-            facade.delete_user(user_id)
-            return {"message": "User deleted"}, 200
-        except (ValueError, TypeError) as e:
             return {"Error": str(e)}, 400
 
 @api.route('/email/<email>')
@@ -89,10 +64,7 @@ class UserByEmail(Resource):
     @api.response(404, 'User not found')
     def get(self, email):
         """Get user details by email"""
-        try:
-            user = facade.get_user_by_email(email)
-            if not user:
-                return {"Error": "User not found"}, 404
-            return user.to_dict(), 200
-        except (ValueError, TypeError) as e:
-            return {"Error": str(e)}, 400
+        user = facade.get_user_by_email(email)
+        if not user:
+            return {"Error": "User not found"}, 404
+        return user.to_dict(), 200
