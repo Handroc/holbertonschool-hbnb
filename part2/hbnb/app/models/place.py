@@ -46,10 +46,6 @@ class Place(BaseModel):
     def owner(self):
         return self._owner
 
-    @property
-    def amenities(self):
-        return self._amenities
-
     @title.setter
     def title(self, title):
         if not (isinstance(title, str)):

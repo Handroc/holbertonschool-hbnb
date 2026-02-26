@@ -12,21 +12,24 @@ user_model = api.model('User', {
 
 @api.route('/')
 class UserList(Resource):
-    @api.expect(user_model, validate=True)
+    @api.expect(user_model)
     @api.response(201, 'User successfully created')
-    @api.response(400, 'Email already registered')
-    @api.response(400, 'Invalid input data')
+    @api.response(400, 'Invalid input data or email already registered')
     def post(self):
         """Register a new user"""
-        user_data = api.payload
+        try:
+            user = facade.create_user(api.payload)
+            return user.to_dict(), 201
+        except ValueError as e:
+            return {"Error": str(e)}, 400
+        except TypeError as e:
+            return {"Error": str(e)}, 400
 
-        # Simulate email uniqueness check (to be replaced by real validation with persistence)
-        existing_user = facade.get_user_by_email(user_data['email'])
-        if existing_user:
-            return {'error': 'Email already registered'}, 400
-
-        new_user = facade.create_user(user_data)
-        return {'id': new_user.id, 'first_name': new_user.first_name, 'last_name': new_user.last_name, 'email': new_user.email}, 201
+    @api.response(200, 'List of users retrieved successfully')
+    def get(self):
+        """Retrieve a list of all users"""
+        all_users = facade.get_all_users()
+        return [x.to_dict() for x in all_users], 200
 
 @api.route('/<user_id>')
 class UserResource(Resource):
@@ -36,55 +39,60 @@ class UserResource(Resource):
         """Get user details by ID"""
         user = facade.get_user(user_id)
         if not user:
-            return {'error': 'User not found'}, 404
-        return {'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name, 'email': user.email}, 200
+            return {"Error": "User not found"}, 404
+        return user.to_dict(), 200
 
-    def get_mail(email):
-        """Get user details by email"""
-        user = facade.get_user_by_email(email)
-        if not user:
-            return {'error': 'User not found'}, 404
-        return {'id': user.id, 'first_name': user.first_name, 'last_name': user.last_name, 'email': user.email}, 200
-
+    @api.expect(user_model)
+    @api.response(200, 'User updated successfully')
+    @api.response(404, 'User not found')
+    @api.response(400, 'Invalid input data or email already taken')
     def put(self, user_id):
-        """Modify the entire details of the user by ID"""
-        user = facade.get_user(user_id)
-        updated_user = facade.put_user(user_id, api.payload)
-        if not user:
-            return {'error': 'User not found'}, 404
-        return {
-        'id': updated_user.id,
-        'first_name': updated_user.first_name,
-        'last_name': updated_user.last_name,
-        'email': updated_user.email
-        }, 200
-    
-    def patch_user(self, user_id):
-        """Modify a specific detail of user"""
-        user = facade.get_user(user_id)
-        if not user:
-            return {'error': 'User not found'}, 404
-        
-        payload = api.payload or {}
+        """Update entire user details by ID"""
+        try:
+            user = facade.put_user(user_id, api.payload)
+            return user.to_dict(), 200
+        except ValueError as e:
+            return {"Error": str(e)}, 400
+        except TypeError as e:
+            return {"Error": str(e)}, 404
 
-        if 'email' in payload:
-            existing_user = facade.get_user_by_email(payload['email'])
-            if existing_user and existing_user.id != user_id:
-                return {'error': 'Email already taken'}, 400
-        
-        updated_user = facade.patch(user_id, payload)
+    @api.expect(user_model)
+    @api.response(200, 'User partially updated successfully')
+    @api.response(404, 'User not found')
+    @api.response(400, 'Invalid input data or email already taken')
+    def patch(self, user_id):
+        """Update specific user details by ID"""
+        try:
+            user = facade.patch_user(user_id, api.payload)
+            if not user:
+                return {"Error": "User not found"}, 404
+            return user.to_dict(), 200
+        except ValueError as e:
+            return {"Error": str(e)}, 400
 
-        return {
-            'id': updated_user.id,
-            'first_name': updated_user.first_name,
-            'last_name': updated_user.last_name,
-            'email': updated_user.email
-        }, 200
-
+    @api.response(200, 'User deleted successfully')
+    @api.response(404, 'User not found')
     def delete(self, user_id):
-        """Delete user"""
-        user = facade.get_user(user_id)
-        if not user:
-            return {'error': 'User not found'}, 404
-        facade.delete_user(user_id)
-        return {'message': 'User deleted'}, 200
+        """Delete a user"""
+        try:
+            user = facade.get_user(user_id)
+            if not user:
+                return {"Error": "User not found"}, 404
+            facade.delete_user(user_id)
+            return {"message": "User deleted"}, 200
+        except (ValueError, TypeError) as e:
+            return {"Error": str(e)}, 400
+
+@api.route('/email/<email>')
+class UserByEmail(Resource):
+    @api.response(200, 'User details retrieved successfully')
+    @api.response(404, 'User not found')
+    def get(self, email):
+        """Get user details by email"""
+        try:
+            user = facade.get_user_by_email(email)
+            if not user:
+                return {"Error": "User not found"}, 404
+            return user.to_dict(), 200
+        except (ValueError, TypeError) as e:
+            return {"Error": str(e)}, 400
