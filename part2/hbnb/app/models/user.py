@@ -70,3 +70,4 @@ class User(BaseModel):
     def __repr__(self):
         """Return the official string representation of the User."""
         return f"User(id='{self.id}', email='{self.email}')"
+
