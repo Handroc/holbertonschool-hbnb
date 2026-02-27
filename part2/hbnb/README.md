@@ -87,9 +87,9 @@ python run.py
 | POST | `/users/` | Create a user |
 | GET | `/users/` | Retrieve all users |
 | GET | `/users/{id}` | Get user by ID |
+| GET | `/users/email` | Get user by EMAIL |
 | PUT | `/users/{id}` | Update user details |
-
-⚠️ Passwords are stored securely but are **not returned** by the API.  
+ 
 🚫 `DELETE` not implemented for Users.
 
 ---
@@ -114,9 +114,10 @@ python run.py
 | POST | `/places/` | Create a place |
 | GET | `/places/` | List all places |
 | GET | `/places/{id}` | Get place by ID (includes owner & amenities) |
+| GET | `/places/{id}/reviews` | Get all reviews for a specific place |
 | PUT | `/places/{id}` | Update place details |
 
-✔ Includes data from related `User` and `Amenity` objects.  
+✔ Includes data from related `User` `Amenity` and `Reviews` objects.  
 🚫 `DELETE` not implemented.
 
 ---
@@ -156,7 +157,7 @@ project_root/
 │       │   ├── test_reviews.py
 │       │   └── ...
 │       ├── ...
-│       └── app.py (or create_app.py)
+│       └── run.py
 ```
 
 ---
@@ -212,9 +213,9 @@ http://localhost:5000/api/v1/
 curl -X POST http://localhost:5000/api/v1/users/ \
 -H "Content-Type: application/json" \
 -d '{
-  "first_name": "Alice",
-  "last_name": "Wonderland",
-  "email": "alice@example.com"
+  "first_name": "Claire",
+  "last_name": "Obscure",
+  "email": "claire@example.com"
 }'
 ```
 
