@@ -64,7 +64,7 @@ class UserResource(Resource):
         return user.to_dict(), 200
 
     @jwt_required()
-    @api.expect(user_model)
+    @api.expect(update_user_model)
     @api.response(200, 'User updated successfully')
     @api.response(404, 'User not found')
     @api.response(400, 'Invalid input data or email already taken')
