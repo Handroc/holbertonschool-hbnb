@@ -19,9 +19,12 @@ class Place(BaseModel):
     longitude = db.Column(db.Float, nullable=False)
 
     user_id = db.Column(db.String(36), db.ForeignKey('users.id'), nullable=False)
+    picture = db.Column(db.String(255), nullable=True)
 
     user = db.relationship('User', back_populates='places')
     reviews = db.relationship('Review', back_populates='place', lazy=True, cascade='all, delete-orphan')
+    bookings = db.relationship('Booking', back_populates='place', cascade='all, delete-orphan')
+    images = db.relationship('PlaceImage', back_populates='place', cascade='all, delete-orphan', order_by='PlaceImage.order')
     amenities = db.relationship(
         'Amenity',
         secondary=place_amenity,
@@ -114,6 +117,9 @@ class Place(BaseModel):
         if "longitude" in data:
             self.longitude = self._validate_coordinate(data["longitude"], "longitude", -180.0, 180.0)
 
+        if "picture" in data:
+            self.picture = data["picture"]
+
         self.updated_at = current_time()
 
     def add_review(self, review):
@@ -147,11 +153,31 @@ class Place(BaseModel):
             self.updated_at = current_time()
 
     def to_dict(self):
+        from collections import Counter
         data = super().to_dict()
         data.pop('user_id', None)
 
         owner_dict = self.owner.to_dict()
         data["owner"] = owner_dict
         data["amenities"] = [amenity.to_dict() for amenity in self.amenities]
+
+        counts = Counter(r.rating for r in self.reviews)
+        data["review_counts"] = {str(i): counts.get(i, 0) for i in range(1, 6)}
+        total = sum(counts.values())
+        data["average_rating"] = round(sum(r * n for r, n in counts.items()) / total, 1) if total else None
+
+        cat_fields = ("cleanliness", "location", "value_score", "communication")
+        cat_avgs = {}
+        for field in cat_fields:
+            scores = [getattr(r, field) for r in self.reviews if getattr(r, field) is not None]
+            cat_avgs[field] = round(sum(scores) / len(scores), 1) if scores else None
+        data["category_averages"] = cat_avgs
+
+        data["images"] = [{"id": img.id, "path": img.path, "order": img.order} for img in self.images]
+        data["_bookedRanges"] = [
+            [b.check_in.isoformat(), b.check_out.isoformat()]
+            for b in self.bookings
+            if b.status == 'confirmed'
+        ]
 
         return data

@@ -12,9 +12,11 @@ class User(BaseModel):
     email = db.Column(db.String(120), nullable=False, unique=True)
     password = db.Column(db.String(128), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
+    profile_picture = db.Column(db.String(255), nullable=True)
 
     places = db.relationship('Place', back_populates='user', lazy=True, cascade='all, delete-orphan')
     reviews = db.relationship('Review', back_populates='user', lazy=True, cascade='all, delete-orphan')
+    bookings = db.relationship('Booking', back_populates='user', cascade='all, delete-orphan')
 
     @staticmethod
     def _validate_name(value, field_name):
@@ -92,4 +94,8 @@ class User(BaseModel):
 
         if "is_admin" in data:
             self.is_admin = self._validate_is_admin(data["is_admin"])
+
+        if "profile_picture" in data:
+            self.profile_picture = data["profile_picture"]
+
         self.updated_at = current_time()
