@@ -15,7 +15,7 @@ VALUES (
     'Admin',
     'HBnB',
     'admin@hbnb.io',
-    '$2b$12$V6sQvXnU4oHnYzTnYfH0ruu8c4E3Z6sKjKJqP8j9uW4v5gD4NfE3K',
+    '$2b$12$STtLeRFtxrPvcuvd9DVyxu7fRxDOwJo1poEx3gJWrjDkCGASbrWKa',
     TRUE,
     CURRENT_TIMESTAMP,
     CURRENT_TIMESTAMP
