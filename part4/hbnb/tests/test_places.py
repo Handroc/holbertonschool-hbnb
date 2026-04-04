@@ -1,4 +1,4 @@
-from tests.helpers import APITestCase
+from tests.helpers import ADMIN_EMAIL, APITestCase
 
 
 class TestPlaces(APITestCase):
@@ -41,6 +41,13 @@ class TestPlaces(APITestCase):
         place = response.get_json()
         self.assertIn("id", place)
         self.assertEqual(place["owner"]["id"], owner_id)
+
+    def test_create_admin_place_helper(self):
+        place = self.create_admin_place(title="Admin Suite")
+
+        self.assertIn("id", place)
+        self.assertEqual(place["title"], "Admin Suite")
+        self.assertEqual(place["owner"]["email"], ADMIN_EMAIL)
 
     def test_create_place_invalid_amenity_id(self):
         owner_id, owner_payload = self.create_user("badamenity")

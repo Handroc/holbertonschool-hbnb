@@ -89,7 +89,7 @@ class APITestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 201, response.get_json())
         return response.get_json()
 
-    def create_place(self, owner_token, title="Beach House", amenities=None):
+    def make_place_payload(self, title="Beach House", amenities=None, **overrides):
         if amenities is None:
             amenities = []
         payload = {
@@ -101,6 +101,11 @@ class APITestCase(unittest.TestCase):
             "owner_id": "ignored-by-api",
             "amenities": amenities,
         }
+        payload.update(overrides)
+        return payload
+
+    def create_place(self, owner_token, title="Beach House", amenities=None, **overrides):
+        payload = self.make_place_payload(title=title, amenities=amenities, **overrides)
         response = self.client.post(
             "/api/v1/places/",
             json=payload,
@@ -108,3 +113,11 @@ class APITestCase(unittest.TestCase):
         )
         self.assertEqual(response.status_code, 201, response.get_json())
         return response.get_json()
+
+    def create_admin_place(self, title="Beach House", amenities=None, **overrides):
+        return self.create_place(
+            self.admin_token,
+            title=title,
+            amenities=amenities,
+            **overrides,
+        )
