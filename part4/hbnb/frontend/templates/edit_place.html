@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBnB - Edit Place</title>
+    <link rel="icon" href="../static/images/icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body>
+    <header>
+        <a href="index.html">
+            <img src="../static/images/logo.png" alt="HBnB" class="logo">
+        </a>
+        <nav>
+            <a href="index.html">Browse</a>
+            <a href="notifications.html" id="notif-nav-link" class="hidden" aria-hidden="true" aria-label="Notifications"><span class="notif-bell-wrap">🔔<span id="notif-badge" class="notif-badge hidden" aria-hidden="true"></span></span></a>
+            <a href="inbox.html" id="inbox-link" class="hidden" aria-hidden="true" title="Inbox">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                <span id="inbox-unread-badge" class="inbox-badge hidden" aria-hidden="true"></span>
+            </a>
+            <a href="login.html" class="login-button" id="login-link">Login</a>
+            <a href="#" class="login-button hidden" id="logout-link" aria-hidden="true">Logout</a>
+            <div class="nav-avatar-wrap hidden" id="nav-avatar-wrap" aria-hidden="true">
+                <button class="nav-avatar-btn" id="nav-avatar-btn" aria-label="Account menu" aria-haspopup="menu" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+                <div class="nav-dropdown" id="nav-dropdown" role="menu" aria-hidden="true">
+                    <a href="inbox.html" id="inbox-menu-link" class="hidden" aria-hidden="true">Inbox <span id="inbox-menu-count" class="nav-menu-count hidden" aria-hidden="true"></span></a>
+                    <a href="notifications.html" id="notif-menu-link" class="hidden" aria-hidden="true">Notifications <span id="notif-menu-count" class="nav-menu-count hidden" aria-hidden="true"></span></a>
+                    <a href="add_place.html" id="add-place-link" class="hidden" aria-hidden="true">Add your own place</a>
+                    <a href="profile.html">Profile</a>
+                    <a href="my_places.html">My Places</a>
+                    <a href="my_bookings.html">My Bookings</a>
+                    <a href="saved_places.html">Saved Places</a>
+                    <a href="admin.html" id="admin-nav-link" class="hidden" aria-hidden="true">Admin</a>
+                    <a href="#" id="logout-menu-link" class="hidden" aria-hidden="true">Logout</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="page-form-shell">
+            <h1 id="edit-place-title" class="page-form-title">Edit Place</h1>
+            <p id="edit-place-error" class="form-feedback-error hidden" aria-live="polite" aria-hidden="true"></p>
+            <p id="edit-place-success" class="form-feedback-success hidden" aria-live="polite" aria-hidden="true"></p>
+            <form id="edit-place-form" class="form">
+                <label for="place-title">Title:</label>
+                <input type="text" id="place-title" name="title" required>
+
+                <label for="place-description">Description:</label>
+                <textarea id="place-description" name="description"></textarea>
+
+                <label for="place-price">Price per night ($):</label>
+                <input type="number" id="place-price" name="price" min="1" step="0.01" required>
+
+                <label for="place-latitude">Latitude:</label>
+                <input type="number" id="place-latitude" name="latitude" min="-90" max="90" step="any" required>
+
+                <label for="place-longitude">Longitude:</label>
+                <input type="number" id="place-longitude" name="longitude" min="-180" max="180" step="any" required>
+
+                <fieldset class="form-fieldset">
+                    <legend>Amenities</legend>
+                    <div id="amenities-checkboxes" class="amenities-checkbox-grid">
+                        <!-- Populated dynamically -->
+                    </div>
+                </fieldset>
+
+                <label for="place-picture">Cover Photo:</label>
+                <img id="place-picture-preview" class="hidden" aria-hidden="true" src="" alt="Current photo">
+                <input type="file" id="place-picture" name="picture" accept="image/*">
+
+                <label>Additional Images:</label>
+                <div id="place-images-gallery" class="place-gallery"></div>
+                <input type="file" id="place-extra-images" name="extra_images" accept="image/*" multiple>
+                <p class="small-note">Upload one or more extra photos.</p>
+
+                <div class="form-action-row">
+                    <button type="submit">Save Changes</button>
+                    <a id="back-to-place-link" href="my_places.html" class="muted-inline-link">Cancel</a>
+                </div>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 HBnB. All rights reserved.</p>
+    </footer>
+    <script src="../static/js/utils.js"></script>
+    <script src="../static/js/auth.js"></script>
+    <script src="../static/js/pages/edit-place.js"></script>
+</body>
+</html>

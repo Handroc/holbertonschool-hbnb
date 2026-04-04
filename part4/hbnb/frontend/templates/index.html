@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBnB - List of Places</title>
+    <link rel="icon" href="../static/images/icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body>
+    <header>
+        <a href="index.html">
+            <img src="../static/images/logo.png" alt="HBnB" class="logo">
+        </a>
+        <nav>
+            <a href="index.html">Browse</a>
+            <a href="notifications.html" id="notif-nav-link" class="hidden" aria-hidden="true" aria-label="Notifications"><span class="notif-bell-wrap">🔔<span id="notif-badge" class="notif-badge hidden" aria-hidden="true"></span></span></a>
+            <a href="inbox.html" id="inbox-link" class="hidden" aria-hidden="true" title="Inbox">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                <span id="inbox-unread-badge" class="inbox-badge hidden" aria-hidden="true"></span>
+            </a>
+            <a href="login.html" class="login-button" id="login-link">Login</a>
+            <a href="#" class="login-button hidden" id="logout-link" aria-hidden="true">Logout</a>
+            <div class="nav-avatar-wrap hidden" id="nav-avatar-wrap" aria-hidden="true">
+                <button class="nav-avatar-btn" id="nav-avatar-btn" aria-label="Account menu" aria-haspopup="menu" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+                <div class="nav-dropdown" id="nav-dropdown" role="menu" aria-hidden="true">
+                    <a href="inbox.html" id="inbox-menu-link" class="hidden" aria-hidden="true">Inbox <span id="inbox-menu-count" class="nav-menu-count hidden" aria-hidden="true"></span></a>
+                    <a href="notifications.html" id="notif-menu-link" class="hidden" aria-hidden="true">Notifications <span id="notif-menu-count" class="nav-menu-count hidden" aria-hidden="true"></span></a>
+                    <a href="add_place.html" id="add-place-link" class="hidden" aria-hidden="true">Add your own place</a>
+                    <a href="profile.html">Profile</a>
+                    <a href="my_places.html">My Places</a>
+                    <a href="my_bookings.html">My Bookings</a>
+                    <a href="saved_places.html">Saved Places</a>
+                    <a href="admin.html" id="admin-nav-link" class="hidden" aria-hidden="true">Admin</a>
+                    <a href="#" id="logout-menu-link" class="hidden" aria-hidden="true">Logout</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section id="filter" aria-label="Filters">
+            <div class="filter-primary">
+                <label for="search-input" class="sr-only">Search places</label>
+                <input type="text" id="search-input" placeholder="Search places…" aria-label="Search places">
+                <label for="sort-select" class="sr-only">Sort by</label>
+                <select id="sort-select" aria-label="Sort by">
+                    <option value="default">Default</option>
+                    <option value="price-asc">Price ↑</option>
+                    <option value="price-desc">Price ↓</option>
+                    <option value="rating-desc">Top Rated</option>
+                </select>
+                <button type="button" id="filter-toggle" class="filter-toggle-btn" aria-expanded="false" aria-controls="filter-extra">Filters ▾</button>
+                <button type="button" id="clear-filters-btn" class="clear-filters-btn hidden" aria-hidden="true">Clear</button>
+            </div>
+            <div id="filter-extra" class="filter-extra" hidden aria-hidden="true">
+                <div class="filter-extra-inner">
+                    <div class="filter-group">
+                        <label for="price-filter">Max Price:</label>
+                        <select id="price-filter">
+                            <!-- Options will be populated dynamically -->
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="amenity-dropdown-toggle">Amenities:</label>
+                        <div class="amenity-dropdown" id="amenity-dropdown">
+                            <button type="button" id="amenity-dropdown-toggle" class="amenity-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+                                All Amenities
+                            </button>
+                            <div id="amenity-dropdown-menu" class="amenity-dropdown-menu hidden" aria-label="Amenity filters">
+                                <div id="amenity-checkboxes" class="amenity-checkboxes">
+                                    <!-- Amenity checkboxes will be populated dynamically -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label for="avail-from">Check-in:</label>
+                        <input type="date" id="avail-from">
+                    </div>
+                    <div class="filter-group">
+                        <label for="avail-to">Check-out:</label>
+                        <input type="date" id="avail-to">
+                    </div>
+                </div>
+            </div>
+            <p id="filter-error" class="form-feedback-error hidden" aria-live="polite" aria-hidden="true"></p>
+        </section>
+        <section id="places-list">
+            <div id="active-filters-list" class="active-filters-list"></div>
+            <div id="places-container">
+                <!-- Places will be populated dynamically -->
+            </div>
+            <div id="pagination-controls" class="hidden" aria-hidden="true">
+                <button id="prev-page" class="pagination-btn">&larr; Prev</button>
+                <span id="page-info"></span>
+                <button id="next-page" class="pagination-btn">Next &rarr;</button>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 HBnB. All rights reserved.</p>
+    </footer>
+    <script src="../static/js/utils.js"></script>
+    <script src="../static/js/auth.js"></script>
+    <script src="../static/js/pages/index.js"></script>
+</body>
+</html>

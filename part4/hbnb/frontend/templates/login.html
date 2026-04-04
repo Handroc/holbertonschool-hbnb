@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBnB - Login</title>
+    <link rel="icon" href="../static/images/icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body>
+    <header>
+        <a href="index.html">
+            <img src="../static/images/logo.png" alt="HBnB" class="logo">
+        </a>
+        <nav>
+            <a href="index.html">Browse</a>
+            <a href="login.html" class="login-button">Login</a>
+        </nav>
+    </header>
+    <main class="auth-layout">
+        <div class="auth-card">
+            <form id="login-form">
+            <h2>Welcome back</h2>
+            <p class="login-tagline">Sign in to find your next stay.</p>
+            <p id="login-error" class="form-feedback-error hidden" aria-live="polite" aria-hidden="true">Invalid email or password.</p>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Login</button>
+        </form>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 HBnB. All rights reserved.</p>
+    </footer>
+    <script src="../static/js/utils.js"></script>
+    <script src="../static/js/auth.js"></script>
+    <script src="../static/js/pages/login.js"></script>
+</body>
+</html>

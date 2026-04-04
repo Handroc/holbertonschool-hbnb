@@ -1,0 +1,191 @@
+/* ===== WISHLIST HEART ===== */
+.wish-btn {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    padding: 0 0.2rem;
+    line-height: 1;
+    transition: transform 0.15s;
+}
+.wish-btn:hover { transform: scale(1.2); }
+.wish-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--focus-ring);
+    border-radius: 4px;
+}
+
+@keyframes heartPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.4); }
+    100% { transform: scale(1); }
+}
+.wish-btn.active { 
+    color: var(--red); 
+    animation: heartPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.wish-btn.inactive { color: var(--text-muted); }
+
+/* ===== NOTIFICATION BELL ===== */
+.notif-bell-wrap {
+    position: relative;
+    display: inline-block;
+    transform-origin: top center;
+}
+
+@keyframes bellRing {
+    0% { transform: rotate(0); }
+    15% { transform: rotate(15deg); }
+    30% { transform: rotate(-15deg); }
+    45% { transform: rotate(10deg); }
+    60% { transform: rotate(-10deg); }
+    75% { transform: rotate(5deg); }
+    85% { transform: rotate(-5deg); }
+    100% { transform: rotate(0); }
+}
+.notif-bell-wrap:hover {
+    animation: bellRing 0.8s ease-in-out 1;
+}
+
+.notif-badge {
+    position: absolute;
+    top: -6px; right: -8px;
+    background: var(--red);
+    color: var(--white);
+    border-radius: 50%;
+    font-size: 0.65rem;
+    font-weight: 700;
+    min-width: 16px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    padding: 0 2px;
+    display: none;
+}
+
+/* ===== INBOX UNREAD BADGE ===== */
+.inbox-badge {
+    display: inline-block;
+    background: var(--red);
+    color: var(--white);
+    border-radius: 50%;
+    font-size: 0.65rem;
+    font-weight: 700;
+    min-width: 16px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    padding: 0 2px;
+    margin-left: 3px;
+    vertical-align: middle;
+}
+
+/* ===== NOTIFICATIONS PAGE ===== */
+.notif-list { list-style: none; padding: 0; }
+.notif-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    cursor: pointer;
+    transition: background var(--transition);
+}
+.notif-item.unread,
+.notif-item--unread { background: var(--brand-light); border-color: var(--border); font-weight: 600; }
+.notif-item:hover { background: var(--bg); }
+.notif-item .notif-msg,
+.notif-item .notif-message { flex: 1; font-size: 0.9rem; color: var(--text); }
+.notif-item .notif-icon { font-size: 1.2rem; }
+.notif-item .notif-time { font-size: 0.78rem; color: var(--text-muted); white-space: nowrap; }
+.notif-del-btn {
+    background: none; border: none; color: var(--text-muted);
+    cursor: pointer; font-size: 1rem; padding: 0 0.2rem;
+}
+.notif-del-btn:hover { color: var(--red); }
+
+/* ===== MESSAGES / INBOX ===== */
+.inbox-list { list-style: none; padding: 0; }
+.inbox-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    transition: background var(--transition);
+}
+.inbox-item.unread,
+.inbox-item--unread { background: var(--brand-light); border-color: var(--border); }
+.inbox-item .inbox-from { min-width: 120px; font-size: 0.9rem; }
+.inbox-item .inbox-body-preview,
+.inbox-item .inbox-item-preview { flex: 1; font-size: 0.9rem; color: var(--text-sec); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin: 0; }
+.inbox-item .inbox-time { font-size: 0.78rem; color: var(--text-muted); white-space: nowrap; }
+.inbox-item-body { flex: 1; min-width: 0; }
+.inbox-item-meta { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem; }
+
+.list-empty-message {
+    color: var(--text-muted);
+    text-align: center;
+    margin: var(--space-lg) 0;
+}
+.inbox-item-time { font-size: 0.78rem; color: var(--text-muted); white-space: nowrap; }
+.inbox-item-actions { display: flex; align-items: center; gap: 0.4rem; flex-shrink: 0; }
+.message-thread { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1rem; }
+.tab-btn { background: none; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.4rem 1rem; cursor: pointer; font-size: 0.9rem; color: var(--text-sec); margin-right: 0.4rem; transition: background var(--transition); }
+.tab-btn--active, .tab-btn:hover { background: var(--brand); color: var(--white); border-color: var(--brand); }
+
+@media (max-width: 760px) {
+    .notif-item {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .notif-item .notif-message {
+        flex: 1 1 100%;
+        order: 2;
+    }
+
+    .notif-item .notif-time {
+        order: 3;
+    }
+
+    .notif-del-btn {
+        margin-left: auto;
+    }
+
+    .inbox-item {
+        flex-wrap: wrap;
+        gap: 0.6rem;
+    }
+
+    .inbox-item .inbox-from {
+        min-width: 0;
+        flex: 1 1 100%;
+    }
+
+    .inbox-item-meta {
+        flex-wrap: wrap;
+    }
+
+    .inbox-item-actions {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .inbox-item-actions .details-button,
+    .inbox-item-actions .notif-del-btn {
+        min-height: 40px;
+    }
+
+    .tab-btn {
+        margin-right: 0;
+        flex: 1 1 auto;
+    }
+}
