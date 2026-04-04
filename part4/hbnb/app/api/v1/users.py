@@ -1,6 +1,10 @@
+import os
+from flask import request, current_app
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
+
+ALLOWED_IMAGE_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 
 api = Namespace('users', description='User operations')
 
@@ -78,8 +82,8 @@ class UserResource(Resource):
         if not is_admin:
             if str(user_id) != str(current_user_id):
                 return {"Error": 'Admin privileges required'}, 403
-            if "email" in data or "password" in data:
-                return {"Error": 'You cannot modify email or password'}, 400
+            if "email" in data:
+                return {"Error": 'You cannot modify your email'}, 400
             if "is_admin" in data:
                 return {"Error": 'You cannot modify admin privileges'}, 403
         try:
@@ -108,6 +112,42 @@ class UserResource(Resource):
         except ValueError as e:
             return {"Error": str(e)}, 404
 
+@api.route('/<user_id>/avatar')
+class UserAvatar(Resource):
+    @jwt_required()
+    @api.response(200, 'Avatar updated successfully')
+    @api.response(400, 'Invalid file')
+    @api.response(403, 'Unauthorized action')
+    @api.response(404, 'User not found')
+    def post(self, user_id):
+        """Upload or replace a user's profile picture"""
+        current_user_id = get_jwt_identity()
+        is_admin = get_jwt().get('is_admin', False)
+        if not is_admin and str(user_id) != str(current_user_id):
+            return {"Error": "Unauthorized action"}, 403
+
+        if 'avatar' not in request.files:
+            return {"Error": "No file provided (field name: 'avatar')"}, 400
+        file = request.files['avatar']
+        if not file or not file.filename:
+            return {"Error": "No file selected"}, 400
+
+        ext = file.filename.rsplit('.', 1)[-1].lower() if '.' in file.filename else ''
+        if ext not in ALLOWED_IMAGE_EXTENSIONS:
+            return {"Error": f"Unsupported file type. Allowed: {', '.join(ALLOWED_IMAGE_EXTENSIONS)}"}, 400
+
+        upload_dir = os.path.join(current_app.static_folder, 'images', 'avatars')
+        os.makedirs(upload_dir, exist_ok=True)
+        filename = f"{user_id}.{ext}"
+        file.save(os.path.join(upload_dir, filename))
+
+        picture_url = f"/static/images/avatars/{filename}"
+        try:
+            facade.update_user_picture(user_id, picture_url)
+            return {"profile_picture": picture_url}, 200
+        except ValueError as e:
+            return {"Error": str(e)}, 404
+
 @api.route('/email/<email>')
 class UserByEmail(Resource):
     @api.response(200, 'User details retrieved successfully')
@@ -118,3 +158,16 @@ class UserByEmail(Resource):
         if not user:
             return {"Error": "User not found"}, 404
         return user.to_dict(), 200
+
+
+@api.route('/<user_id>/places')
+class UserPlaceList(Resource):
+    @api.response(200, 'List of places retrieved successfully')
+    @api.response(404, 'User not found')
+    def get(self, user_id):
+        """Get all places owned by a user"""
+        user = facade.get_user(user_id)
+        if not user:
+            return {"Error": "User not found"}, 404
+        places = facade.get_places_by_owner(user_id)
+        return [p.to_dict() for p in places], 200
