@@ -10,7 +10,7 @@ class Notification(BaseModel):
     message = db.Column(db.String(500), nullable=False)
     read = db.Column(db.Boolean, default=False, nullable=False)
 
-    user = db.relationship('User', backref=db.backref('notifications', lazy=True))
+    user = db.relationship('User', back_populates='notifications')
 
     def to_dict(self):
         data = super().to_dict()

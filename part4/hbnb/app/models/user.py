@@ -17,6 +17,12 @@ class User(BaseModel):
     places = db.relationship('Place', back_populates='user', lazy=True, cascade='all, delete-orphan')
     reviews = db.relationship('Review', back_populates='user', lazy=True, cascade='all, delete-orphan')
     bookings = db.relationship('Booking', back_populates='user', cascade='all, delete-orphan')
+    notifications = db.relationship(
+        'Notification',
+        back_populates='user',
+        lazy=True,
+        cascade='all, delete-orphan'
+    )
 
     @staticmethod
     def _validate_name(value, field_name):
