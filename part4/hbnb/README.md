@@ -54,10 +54,10 @@ The frontend consists of 18 HTML pages served as static files, styled with a war
 | `app/persistence/repository.py` | Abstract `Repository` base class + `SQLAlchemyRepository` implementation |
 | `app/__init__.py` | Flask app factory (`create_app`), namespace registration, schema migrations |
 | `frontend/templates/` | 18 HTML pages (see [Frontend Pages](#frontend-pages)) |
-| `frontend/static/css/` | Modular CSS split across 9 feature files + `styles.css` import bundle |
-| `frontend/static/js/` | `utils.js` (globals/helpers), `auth.js` (nav/dropdown), and 17 page-specific modules in `pages/` |
+| `frontend/static/css/` | Two-level modular CSS: `styles.css` imports 9 feature bundles (`base`, `layout`, `components`, `index`, `place`, `bookings`, `admin`, `profile`, `features`); each bundle imports numbered sub-modules from a matching subdirectory (81 CSS files total) |
+| `frontend/static/js/` | `utils.js` (globals/helpers), `auth-dropdown.js` (avatar dropdown keyboard nav + ARIA), `auth.js` (nav visibility, badge polling, session management), and 20 files in `pages/` (17 page modules + 3 render helpers: `index-render.js`, `notifications-view.js`, `inbox-render.js`) |
 | `frontend/static/images/` | User avatars, place photos, amenity icons (`icon_wifi.png`, `icon_bed.png`, `icon_bath.png`, `icon_pool.png`, `icon_air-conditioner.png`) |
-| `tests/` | 10 test modules covering auth, CRUD, relationships, cascades, and validation |
+| `tests/` | 13 test modules covering auth, CRUD, relationships, cascades, validation, notifications, messages, and wishlist |
 | `sql/` | `schema.sql` (table definitions), `enter_data.sql` (seed data), `hbnb.db` (SQLite dev database) |
 | `config.py` | Flask, JWT, and database configuration (Development / Testing environments) |
 | `run.py` | Application entry point |
@@ -127,8 +127,8 @@ All endpoints are prefixed with `/api/v1`. Swagger UI is available at `http://12
 - **Review**: `text`, `rating` (1–5), optional category scores (`cleanliness`, `location`, `value_score`, `communication`), linked to a `User` and a `Place`
 - **Booking**: `check_in`, `check_out` (ISO dates), `status` (`pending`/`confirmed`/`cancelled`), linked to a `User` (guest) and a `Place`
 - **WishlistItem**: links a `User` to a saved `Place`
-- **Notification**: `message`, `is_read`, linked to a `User`
-- **Message**: `body`, `is_read`, linked to sender and recipient `User`s
+- **Notification**: `type`, `message`, `read`, linked to a `User`
+- **Message**: `body`, `read`, linked to sender and recipient `User`s
 - **PlaceImage**: extra image path, linked to a `Place`
 
 ```mermaid
@@ -166,7 +166,7 @@ erDiagram
         double price
         double latitude
         double longitude
-        string owner_id FK
+        string user_id FK
         string picture
     }
     REVIEW {
@@ -203,20 +203,22 @@ erDiagram
     }
     NOTIFICATION {
         string id
+        string type
         string message
-        bool is_read
+        bool read
         string user_id FK
     }
     MESSAGE {
         string id
         string body
-        bool is_read
+        bool read
         string sender_id FK
         string recipient_id FK
     }
     PLACE_IMAGE {
         string id
-        string image_path
+        string path
+        int order
         string place_id FK
     }
 ```
@@ -360,7 +362,7 @@ All pages are served as static HTML files from `frontend/templates/`. They load 
 
 | **Page** | **File** | **Access** | **Description** |
 |----------|----------|:----------:|-----------------|
-| Home / Place Listing | `index.html` | Public | Place cards (2-per-row editorial grid) with price/amenity/search/date filters, wishlist hearts, pagination |
+| Home / Place Listing | `index.html` | Public | Place cards (editorial asymmetric grid — wide viewport: every 5th card spans 2 columns) with price/amenity/search/date filters, active-filter pills, wishlist hearts, pagination |
 | Place Detail | `place.html` | Public | Hero gallery, Leaflet map, multi-category review scores, inline booking + review forms |
 | Login | `login.html` | Public | JWT login form with redirect |
 | Public Profile | `user_profile.html` | Public | Another user's profile — avatar, bio, listed places, message button |
@@ -375,7 +377,7 @@ All pages are served as static HTML files from `frontend/templates/`. They load 
 | Inbox | `inbox.html` | Auth | Messaging inbox with Received / Sent tabs; reply and compose panels; unread badge |
 | Notifications | `notifications.html` | Auth | In-app notification feed; mark-read and delete per item; mark-all-read button |
 | Admin Hub | `admin.html` | Admin | Landing page linking to Users, Amenities, and Bookings admin panels |
-| Admin Users | `admin_users.html` | Admin | User table with delete and create-user form |
+| Admin Users | `admin_users.html` | Admin | User table with real-time search, edit link (→ `profile.html?id=<userId>`), delete, and create-user form |
 | Admin Amenities | `admin_amenities.html` | Admin | Amenity table with inline edit and delete |
 | Admin Bookings | `admin_bookings.html` | Admin | All bookings table with delete |
 
@@ -407,6 +409,9 @@ holbertonschool-hbnb/
         │   ├── test_places.py
         │   ├── test_reviews.py
         │   ├── test_bookings.py
+        │   ├── test_notifications.py
+        │   ├── test_messages.py
+        │   ├── test_wishlist.py
         │   ├── test_relationships.py
         │   ├── test_protected.py
         │   ├── test_payload_and_validation.py
