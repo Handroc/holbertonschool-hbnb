@@ -1,0 +1,30 @@
+/* ===== PAGINATION ===== */
+#pagination-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1.5rem 0 0.5rem;
+}
+
+.pagination-btn {
+    background: var(--brand);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    padding: 0.45rem 1.1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background var(--transition);
+}
+.pagination-btn:hover:not(:disabled) { background: var(--brand-dark); }
+.pagination-btn:disabled { background: var(--border); color: var(--text-muted); cursor: default; }
+
+#page-info {
+    font-size: 0.9rem;
+    color: var(--text-sec);
+    min-width: 100px;
+    text-align: center;
+}
+

@@ -1,0 +1,4 @@
+/* ===== UTILITY CLASSES ===== */
+.text-muted { color: var(--text-muted); }
+.places-heading { margin-bottom: 1rem; color: var(--text); }
+

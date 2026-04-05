@@ -1,0 +1,564 @@
+/* ===== MESSAGES / INBOX ===== */
+.inbox-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0 auto 0.2rem;
+    max-width: 940px;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid color-mix(in oklch, var(--brand) 24%, var(--border));
+}
+
+.inbox-layout {
+    max-width: 940px;
+    margin: 0 auto;
+    display: grid;
+    gap: 0.95rem;
+}
+
+.inbox-head h1 {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 2.7rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+}
+
+.inbox-head-note {
+    margin: 0;
+    color: color-mix(in oklch, var(--text-sec) 84%, var(--brand) 16%);
+    font-size: 0.95rem;
+    max-width: 58ch;
+    line-height: 1.58;
+}
+
+.inbox-feedback {
+    margin: 0;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--card);
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.inbox-feedback p {
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: 1.5;
+}
+
+.inbox-feedback.is-warning {
+    background: color-mix(in oklch, var(--brand-light) 55%, var(--card));
+    border-color: color-mix(in oklch, var(--brand) 48%, var(--border));
+}
+
+.inbox-feedback.is-error {
+    background: color-mix(in oklch, var(--danger-soft) 68%, var(--card));
+    border-color: color-mix(in oklch, var(--red) 52%, var(--border));
+}
+
+.inbox-feedback.is-success {
+    background: color-mix(in oklch, var(--brand-light) 62%, var(--card));
+    border-color: color-mix(in oklch, var(--brand) 56%, var(--border));
+}
+
+.inbox-feedback__action {
+    flex-shrink: 0;
+}
+
+.inbox-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.55rem;
+}
+.inbox-item {
+    background: color-mix(in oklch, var(--card) 90%, var(--brand-light) 10%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.8rem 1rem;
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.85rem;
+    box-shadow: 0 10px 18px -18px rgba(34, 39, 47, 0.45);
+    transition: background var(--transition), border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+.inbox-item.unread,
+.inbox-item--unread {
+    background: color-mix(in oklch, var(--brand-light) 76%, var(--card) 24%);
+    border-color: color-mix(in oklch, var(--brand) 32%, var(--border));
+}
+.inbox-item:hover {
+    border-color: color-mix(in oklch, var(--brand) 44%, var(--border));
+    box-shadow: 0 16px 26px -22px rgba(34, 39, 47, 0.52);
+    transform: translateY(-1px);
+}
+
+.inbox-item:focus-within {
+    border-color: color-mix(in oklch, var(--brand) 46%, var(--border));
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--focus-ring) 62%, transparent);
+}
+.inbox-item .inbox-from { min-width: 120px; font-size: 0.9rem; }
+.inbox-item .inbox-body-preview,
+.inbox-item .inbox-item-preview {
+    flex: 1;
+    font-size: 0.93rem;
+    color: var(--text-sec);
+    margin: 0;
+    line-height: 1.5;
+    overflow: hidden;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.inbox-item .inbox-time { font-size: 0.78rem; color: var(--text-muted); white-space: nowrap; }
+.inbox-item-body { flex: 1; min-width: 0; }
+.inbox-item-meta { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem; }
+
+.inbox-item .review-avatar,
+.inbox-item .review-avatar--empty {
+    margin-top: 0.05rem;
+}
+
+.inbox-item-meta strong {
+    font-size: 0.97rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.list-empty-message {
+    color: var(--text-muted);
+    text-align: center;
+    margin: var(--space-lg) 0;
+    border: 1px dashed color-mix(in oklch, var(--brand) 34%, var(--border));
+    border-radius: var(--radius-sm);
+    background: color-mix(in oklch, var(--brand-light) 38%, var(--card));
+    padding: var(--space-md) var(--space-sm);
+    font-size: 0.94rem;
+    line-height: 1.6;
+}
+
+.inbox-loading-state {
+    font-style: italic;
+    opacity: 0.88;
+}
+
+.inbox-onboarding-state {
+    align-items: flex-start;
+    text-align: left;
+    padding: var(--space-lg);
+    background: color-mix(in oklch, var(--brand-light) 42%, var(--card));
+    border-style: solid;
+}
+
+.inbox-onboarding-state h3 {
+    margin: 0 0 var(--space-xs);
+}
+
+.inbox-onboarding-state p {
+    margin: 0 0 var(--space-sm);
+    max-width: 56ch;
+    color: var(--text-sec);
+}
+
+.inbox-onboarding-steps {
+    margin: 0 0 var(--space-sm) 1.1rem;
+    padding: 0;
+    display: grid;
+    gap: 0.35rem;
+    color: var(--text-sec);
+}
+
+.inbox-onboarding-steps li::marker {
+    color: color-mix(in oklch, var(--brand) 70%, var(--text-sec));
+    font-weight: 700;
+}
+
+.inbox-onboarding-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+}
+
+.inbox-onboarding-actions .btn--primary,
+.inbox-onboarding-actions .btn-outline {
+    min-height: 42px;
+}
+
+.inbox-onboarding-secondary {
+    border-color: color-mix(in oklch, var(--text-muted) 62%, var(--border));
+    color: var(--text-muted);
+    background: transparent;
+}
+
+.inbox-onboarding-secondary:hover {
+    border-color: color-mix(in oklch, var(--text-sec) 64%, var(--border));
+    color: var(--text-sec);
+}
+
+.inbox-item-time {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+.inbox-item-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.4rem;
+    flex-shrink: 0;
+}
+
+.inbox-item-actions .details-button,
+.inbox-item-actions .notif-del-btn {
+    min-height: 38px;
+}
+
+.inbox-item-actions button:disabled,
+#compose-form button:disabled {
+    opacity: 0.62;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+#compose-form button[aria-busy="true"],
+.inbox-item-actions button[aria-busy="true"] {
+    pointer-events: none;
+}
+.message-thread { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1rem; }
+.tabs-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    width: fit-content;
+    padding: 0.35rem;
+    border-radius: calc(var(--radius-sm) + 2px);
+    background: color-mix(in oklch, var(--brand-light) 55%, var(--card));
+    border: 1px solid color-mix(in oklch, var(--brand) 28%, var(--border));
+}
+
+.inbox-triage {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid color-mix(in oklch, var(--brand) 22%, var(--border));
+    border-radius: var(--radius-sm);
+    background: color-mix(in oklch, var(--card) 84%, var(--brand-light));
+}
+
+.inbox-triage-summary {
+    margin: 0;
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--text-sec);
+}
+
+.inbox-triage-switch {
+    min-height: 36px;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8rem;
+}
+
+.inbox-secondary-action {
+    border-radius: 999px;
+    min-height: 36px;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8rem;
+}
+
+.inbox-activation-hint {
+    margin: 0;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-sm);
+    border: 1px dashed color-mix(in oklch, var(--brand) 28%, var(--border));
+    background: color-mix(in oklch, var(--brand-light) 28%, var(--card));
+    color: var(--text-sec);
+    font-size: 0.84rem;
+    line-height: 1.45;
+}
+
+.tab-btn {
+    background: color-mix(in oklch, var(--bg) 55%, var(--card));
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.45rem 1rem;
+    min-height: 42px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--text-sec);
+    margin-right: 0;
+    transition: background var(--transition), color var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+
+#compose-title {
+    margin-bottom: 0.75rem;
+    font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+    line-height: 1.18;
+}
+
+#compose-form label {
+    font-size: 0.84rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.tab-btn:hover {
+    border-color: color-mix(in oklch, var(--brand) 38%, var(--border));
+    color: var(--text);
+}
+
+.tab-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.tab-btn--active,
+.tab-btn[aria-selected="true"] {
+    background: color-mix(in oklch, var(--brand) 88%, var(--brand-dark) 12%);
+    color: var(--white);
+    border-color: var(--brand);
+}
+
+#compose-panel {
+    margin-top: 1.25rem;
+    padding: var(--space-md);
+    border: 1px solid color-mix(in oklch, var(--brand) 28%, var(--border));
+    border-radius: var(--radius-sm);
+    background: color-mix(in oklch, var(--brand-light) 52%, var(--card));
+}
+
+@media (max-width: 760px) {
+    .notif-layout {
+        gap: 0.75rem;
+        padding: 0;
+    }
+
+    .notif-head {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.6rem;
+    }
+
+    .notif-refresh-btn {
+        width: 100%;
+        min-height: 44px;
+        font-size: 0.84rem;
+    }
+
+    .notif-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0.55rem 0.6rem;
+    }
+
+    .notif-actions {
+        width: 100%;
+    }
+
+    .notif-actions .notif-mark-all-btn {
+        width: 100%;
+        min-height: 44px;
+    }
+
+    .notif-item {
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+        padding: 0.82rem 0.85rem;
+    }
+
+    .notif-item .notif-icon {
+        display: none;
+    }
+
+    .notif-item-actions {
+        width: 100%;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 0.5rem;
+        align-items: stretch;
+    }
+
+    .notif-item--unread .notif-item-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .notif-del-btn {
+        opacity: 1;
+        transform: translateX(0);
+        pointer-events: auto;
+        width: 44px;
+        height: 44px;
+        border: 1px solid color-mix(in oklch, var(--border) 78%, var(--text-muted));
+        background: color-mix(in oklch, var(--card) 70%, var(--bg));
+    }
+
+    .notif-item:not(.notif-item--unread) .notif-del-btn {
+        justify-self: end;
+    }
+
+    .notif-read-btn {
+        width: 100%;
+        min-height: 44px;
+        font-size: 0.84rem;
+    }
+
+    #notif-feedback {
+        align-items: stretch;
+    }
+
+    .notif-feedback-action {
+        width: 100%;
+        min-height: 44px;
+    }
+
+    .notif-empty-actions {
+        width: 100%;
+    }
+
+    .notif-empty-actions .btn--primary {
+        width: 100%;
+        text-align: center;
+    }
+
+    .inbox-layout {
+        gap: 0.8rem;
+    }
+
+    .inbox-item {
+        grid-template-columns: 1fr;
+        align-items: flex-start;
+        gap: 0.55rem;
+    }
+
+    .inbox-item .inbox-from {
+        min-width: 0;
+        flex: 1 1 100%;
+    }
+
+    .inbox-item .review-avatar,
+    .inbox-item .review-avatar--empty {
+        display: none;
+    }
+
+    .inbox-item-meta {
+        flex-wrap: wrap;
+    }
+
+    .inbox-item-actions {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .inbox-item-actions .details-button,
+    .inbox-item-actions .notif-del-btn {
+        min-height: 40px;
+    }
+
+    .tab-btn {
+        margin-right: 0;
+        flex: 1 1 auto;
+    }
+
+    .inbox-feedback {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .inbox-triage {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0.55rem 0.6rem;
+    }
+
+    .inbox-triage-switch,
+    .inbox-secondary-action {
+        width: 100%;
+    }
+
+    .inbox-activation-hint {
+        padding: 0.5rem 0.65rem;
+    }
+
+    .inbox-feedback__action {
+        width: 100%;
+        text-align: center;
+    }
+
+    .inbox-onboarding-state {
+        align-items: stretch;
+        text-align: left;
+        padding: var(--space-lg) var(--space-md);
+    }
+
+    .inbox-onboarding-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .inbox-onboarding-actions .btn--primary,
+    .inbox-onboarding-actions .btn-outline {
+        width: 100%;
+    }
+
+    .inbox-head {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.65rem;
+    }
+
+    .inbox-head .btn--primary {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .notif-item,
+    .notif-del-btn,
+    .notif-read-btn,
+    .notif-refresh-btn,
+    .notif-mark-all-btn,
+    .notif-feedback-action {
+        transition: none;
+    }
+
+    .notif-item:hover,
+    .notif-item:focus-within {
+        transform: none;
+    }
+
+    .notif-item::before {
+        transition: none;
+    }
+
+    .inbox-item,
+    .tab-btn,
+    .inbox-feedback,
+    .inbox-onboarding-actions .btn--primary,
+    .inbox-onboarding-actions .btn-outline {
+        transition: none;
+    }
+
+    .inbox-item:hover,
+    .inbox-item:focus-within {
+        transform: none;
+    }
+}

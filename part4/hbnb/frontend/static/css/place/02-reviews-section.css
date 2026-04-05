@@ -1,0 +1,6 @@
+/* ===== REVIEWS SECTION ===== */
+#reviews h2 {
+    /* Uses base typography */
+    margin-bottom: var(--space-md);
+}
+

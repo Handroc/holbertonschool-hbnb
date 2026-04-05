@@ -1,0 +1,35 @@
+/* ===== BASE BUTTON (consolidated token) ===== */
+.btn,
+.btn--primary,
+.details-button,
+.form button[type="submit"],
+.btn-secondary,
+.delete-button,
+.pagination-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-lg);
+    border: none;
+    border-radius: 999px;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    font-family: inherit;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background var(--transition), box-shadow var(--transition), transform var(--transition), border-color var(--transition), color var(--transition);
+}
+
+.btn:active,
+.btn--primary:active,
+.details-button:active,
+.form button[type="submit"]:active,
+.btn-secondary:active,
+.delete-button:active,
+.pagination-btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+

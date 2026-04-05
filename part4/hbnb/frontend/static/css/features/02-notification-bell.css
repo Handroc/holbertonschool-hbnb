@@ -1,0 +1,37 @@
+/* ===== NOTIFICATION BELL ===== */
+.notif-bell-wrap {
+    position: relative;
+    display: inline-block;
+    transform-origin: top center;
+}
+
+@keyframes bellRing {
+    0% { transform: rotate(0); }
+    15% { transform: rotate(15deg); }
+    30% { transform: rotate(-15deg); }
+    45% { transform: rotate(10deg); }
+    60% { transform: rotate(-10deg); }
+    75% { transform: rotate(5deg); }
+    85% { transform: rotate(-5deg); }
+    100% { transform: rotate(0); }
+}
+.notif-bell-wrap:hover {
+    animation: bellRing 0.8s ease-in-out 1;
+}
+
+.notif-badge {
+    position: absolute;
+    top: -6px; right: -8px;
+    background: var(--red);
+    color: var(--white);
+    border-radius: 50%;
+    font-size: 0.65rem;
+    font-weight: 700;
+    min-width: 16px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    padding: 0 2px;
+    display: none;
+}
+

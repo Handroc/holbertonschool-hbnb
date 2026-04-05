@@ -1,0 +1,61 @@
+/* ===== ADMIN TABLE ===== */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: color-mix(in oklch, var(--brand) 3%, var(--card));
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid color-mix(in oklch, var(--brand) 18%, var(--border));
+}
+
+.admin-table th,
+.admin-table td {
+    padding: var(--space-md) var(--space-lg);
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+}
+
+.admin-table th {
+    background: linear-gradient(180deg, color-mix(in oklch, var(--brand) 16%, var(--bg)), color-mix(in oklch, var(--brand) 8%, var(--bg)));
+    font-weight: 700;
+    font-size: var(--text-xs);
+    text-transform: none;
+    letter-spacing: 0.02em;
+    color: color-mix(in oklch, var(--brand) 24%, var(--text));
+}
+
+.admin-table tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-table tbody tr {
+    transition: background var(--transition);
+}
+
+.admin-table tbody tr:nth-child(even) {
+    background: color-mix(in oklch, var(--brand) 7%, var(--card));
+}
+
+.admin-table tbody tr:hover {
+    background: color-mix(in oklch, var(--brand) 14%, var(--bg));
+}
+
+.admin-table td {
+    color: var(--text-sec);
+    font-size: var(--text-sm);
+    line-height: 1.45;
+}
+
+.admin-table td:first-child {
+    color: color-mix(in oklch, var(--brand) 14%, var(--text));
+    font-weight: 600;
+}
+
+.admin-table th:last-child,
+.admin-table td:last-child {
+    text-align: right;
+    white-space: nowrap;
+}
+

@@ -1,0 +1,9 @@
+/* ===== MAIN ===== */
+main {
+    padding: var(--space-2xl) clamp(var(--space-md), 5vw, var(--space-2xl));
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    flex: 1;
+}
+

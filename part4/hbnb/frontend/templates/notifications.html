@@ -42,19 +42,41 @@
         </nav>
     </header>
     <main>
-        <h1>Notifications</h1>
-        <div id="notif-actions" class="actions-wrap hidden" aria-hidden="true">
-            <button id="mark-all-read-btn" class="btn-secondary">Mark all as read</button>
-        </div>
-        <div id="notif-list" class="notif-list">
-            <p id="notif-empty" class="text-muted hidden" aria-hidden="true">No notifications yet.</p>
-        </div>
+        <section class="notif-layout" aria-label="Notifications">
+            <div class="notif-head">
+                <h1>Notifications</h1>
+                <button id="notif-refresh-btn" class="btn--secondary notif-refresh-btn" type="button">Refresh feed</button>
+            </div>
+
+            <p id="notif-head-note" class="notif-head-note">Stay updated on bookings and reviews.</p>
+
+            <div id="notif-feedback" class="form-feedback-success hidden" role="status" aria-live="polite" aria-hidden="true"></div>
+
+            <div id="notif-toolbar" class="notif-toolbar hidden" aria-hidden="true">
+                <p id="notif-summary-text" class="notif-summary-text"></p>
+                <div id="notif-actions" class="actions-wrap notif-actions hidden" aria-hidden="true">
+                    <button id="mark-all-read-btn" class="btn--primary notif-mark-all-btn" type="button">Mark all unread as read</button>
+                </div>
+            </div>
+
+            <section id="notif-empty" class="empty-state notif-empty-state hidden" role="status" aria-live="polite" aria-hidden="true">
+                <h2>No notifications yet</h2>
+                <p>You are all caught up. New booking and review updates will appear here as guests and hosts interact with your places.</p>
+                <div class="notif-empty-actions">
+                    <a href="index.html" class="btn--primary">Browse places</a>
+                </div>
+            </section>
+
+            <div id="notif-list" class="notif-list"></div>
+        </section>
     </main>
     <footer>
         <p>&copy; 2025 HBnB. All rights reserved.</p>
     </footer>
     <script src="../static/js/utils.js"></script>
+    <script src="../static/js/auth-dropdown.js"></script>
     <script src="../static/js/auth.js"></script>
+    <script src="../static/js/pages/notifications-view.js"></script>
     <script src="../static/js/pages/notifications.js"></script>
 </body>
 </html>

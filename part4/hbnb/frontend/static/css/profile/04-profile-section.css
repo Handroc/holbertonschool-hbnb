@@ -1,0 +1,126 @@
+/* ===== PROFILE SECTION ===== */
+#profile-section {
+    max-width: 920px;
+    margin: 0 auto;
+}
+
+.profile-shell {
+    display: grid;
+    gap: var(--space-lg);
+}
+
+.profile-shell-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.profile-shell-intro {
+    margin: 0;
+    color: var(--text-sec);
+    font-size: 0.92rem;
+    line-height: 1.45;
+}
+
+.profile-shell-head h1 {
+    margin: 0;
+    font-size: clamp(1.55rem, 2.6vw, 2.1rem);
+    letter-spacing: -0.015em;
+}
+
+.profile-shell-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(240px, 0.85fr);
+    gap: var(--space-md);
+    align-items: start;
+}
+
+.profile-panel {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--card);
+    box-shadow: var(--shadow-xs);
+    padding: var(--space-lg);
+}
+
+.profile-panel--identity {
+    border-color: color-mix(in oklch, var(--brand) 24%, var(--border));
+    background: color-mix(in oklch, var(--card) 90%, var(--brand-light) 10%);
+}
+
+.profile-panel--avatar {
+    border-color: color-mix(in oklch, var(--info) 20%, var(--border));
+    background: color-mix(in oklch, var(--card) 92%, var(--info-bg) 8%);
+}
+
+.profile-panel-title {
+    margin: 0 0 var(--space-sm);
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+}
+
+.profile-panel-note {
+    margin: -0.1rem 0 var(--space-sm);
+    max-width: 54ch;
+}
+
+.profile-panel--avatar {
+    position: sticky;
+    top: 90px;
+}
+
+.profile-panel--danger {
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+}
+
+.profile-panel--danger .delete-button {
+    min-height: 44px;
+}
+
+#profile-email {
+    color: var(--text-sec);
+    margin-bottom: 0;
+    font-size: 0.95rem;
+}
+
+#profile-section h1 {
+    margin-bottom: 0;
+    color: var(--text);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.profile-panel .form {
+    max-width: 100%;
+}
+
+#profile-form label {
+    letter-spacing: 0.01em;
+}
+
+#profile-form input {
+    line-height: 1.35;
+}
+
+.profile-panel .form button[type='submit'] {
+    margin-top: var(--space-xs);
+}
+
+.profile-panel .form-feedback-error,
+.profile-panel .form-feedback-success {
+    margin-bottom: var(--space-sm);
+}
+
+.profile-panel--danger .danger-zone-content h2 {
+    color: var(--red);
+    font-family: var(--font-display);
+    font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+}
+

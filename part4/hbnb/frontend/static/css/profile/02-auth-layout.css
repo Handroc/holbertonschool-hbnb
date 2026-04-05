@@ -1,0 +1,20 @@
+/* ===== AUTH LAYOUT ===== */
+.auth-layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: clamp(60vh, 72vh, 76vh);
+}
+.auth-card {
+    width: 100%;
+    max-width: 440px;
+    background:
+        radial-gradient(120% 100% at 0% 0%, color-mix(in oklch, var(--brand-light) 48%, transparent) 0%, transparent 58%),
+        var(--card);
+    border: 1px solid color-mix(in oklch, var(--brand) 24%, var(--border));
+    border-radius: calc(var(--radius-lg) + 4px);
+    box-shadow: 0 20px 34px -28px rgba(53, 41, 24, 0.35), var(--shadow-sm);
+    padding: var(--space-2xl);
+}
+

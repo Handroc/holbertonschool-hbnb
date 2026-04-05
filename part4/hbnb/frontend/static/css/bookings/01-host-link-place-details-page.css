@@ -1,0 +1,11 @@
+/* ===== HOST LINK (place details page) ===== */
+.host-link {
+    color: var(--warning);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.host-link:hover {
+    text-decoration: underline;
+}
+

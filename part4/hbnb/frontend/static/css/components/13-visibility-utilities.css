@@ -1,0 +1,7 @@
+/* ===== VISIBILITY UTILITIES ===== */
+.hidden,
+.is-hidden,
+[hidden] {
+    display: none;
+}
+

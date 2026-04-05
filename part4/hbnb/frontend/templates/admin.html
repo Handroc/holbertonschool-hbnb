@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../static/css/styles.css">
 </head>
-<body>
+<body class="admin-hub-page">
     <header>
         <a href="index.html">
             <img src="../static/images/logo.png" alt="HBnB" class="logo">
@@ -46,23 +46,28 @@
             <p class="admin-page-kicker">Operations</p>
             <h1>Admin Panel</h1>
             <p class="admin-page-intro">Choose a workspace to manage platform data, then use safe inline actions for updates and removals.</p>
+            <ul class="admin-context-list" aria-label="Admin usage contexts">
+                <li class="admin-context-chip">Desktop: bulk management</li>
+                <li class="admin-context-chip">Tablet: review and triage</li>
+                <li class="admin-context-chip">Mobile: quick interventions</li>
+            </ul>
         </section>
         <nav class="admin-nav-list" aria-label="Admin workspaces">
-            <a href="admin_users.html" class="admin-nav-item">
+            <a href="admin_users.html" class="admin-nav-item" data-workspace="users">
                 <div class="admin-nav-info">
                     <span class="admin-nav-title">Users</span>
                     <span class="admin-nav-desc">Create, edit, and delete user accounts.</span>
                 </div>
                 <span class="admin-nav-arrow">→</span>
             </a>
-            <a href="admin_amenities.html" class="admin-nav-item">
+            <a href="admin_amenities.html" class="admin-nav-item" data-workspace="amenities">
                 <div class="admin-nav-info">
                     <span class="admin-nav-title">Amenities</span>
                     <span class="admin-nav-desc">Manage the list of available amenities.</span>
                 </div>
                 <span class="admin-nav-arrow">→</span>
             </a>
-            <a href="admin_bookings.html" class="admin-nav-item">
+            <a href="admin_bookings.html" class="admin-nav-item" data-workspace="bookings">
                 <div class="admin-nav-info">
                     <span class="admin-nav-title">Bookings</span>
                     <span class="admin-nav-desc">View and delete all bookings across the platform.</span>
@@ -75,6 +80,7 @@
         <p>&copy; 2026 HBnB. All rights reserved.</p>
     </footer>
     <script src="../static/js/utils.js"></script>
+    <script src="../static/js/auth-dropdown.js"></script>
     <script src="../static/js/auth.js"></script>
 </body>
 </html>

@@ -42,37 +42,57 @@
         </nav>
     </header>
     <main>
-        <section class="page-form-shell">
+        <section class="page-form-shell add-place-shell">
             <h1 class="page-form-title">Add your own place</h1>
+            <p class="add-place-kicker">Create a clear listing so guests can book with confidence.</p>
             <p id="add-place-error" class="form-feedback-error hidden" aria-live="polite" aria-hidden="true"></p>
+            <p id="add-place-success" class="form-feedback-success hidden" aria-live="polite" aria-hidden="true"></p>
             <form id="add-place-form" class="form">
-                <label for="place-title">Title:</label>
-                <input type="text" id="place-title" name="title" required>
+                <fieldset class="form-fieldset add-place-section">
+                    <legend>Core details</legend>
+                    <label for="place-title">Title:</label>
+                    <p class="small-note">Use a short, specific title like "Sunny studio near city center".</p>
+                    <input type="text" id="place-title" name="title" required>
 
-                <label for="place-description">Description:</label>
-                <textarea id="place-description" name="description"></textarea>
+                    <label for="place-description">Description:</label>
+                    <p class="small-note">Mention what makes this place unique, plus key amenities and access details.</p>
+                    <textarea id="place-description" name="description"></textarea>
 
-                <label for="place-price">Price per night ($):</label>
-                <input type="number" id="place-price" name="price" min="1" step="0.01" required>
+                    <label for="place-price">Price per night ($):</label>
+                    <p class="small-note">Set the nightly base price before taxes and service fees.</p>
+                    <input type="number" id="place-price" name="price" min="1" step="0.01" required>
+                </fieldset>
 
-                <label for="place-latitude">Latitude:</label>
-                <input type="number" id="place-latitude" name="latitude" min="-90" max="90" step="any" required>
+                <fieldset class="form-fieldset add-place-section">
+                    <legend>Location</legend>
+                    <label for="place-latitude">Latitude:</label>
+                    <p class="small-note">Example: 48.8566</p>
+                    <input type="number" id="place-latitude" name="latitude" min="-90" max="90" step="any" required>
 
-                <label for="place-longitude">Longitude:</label>
-                <input type="number" id="place-longitude" name="longitude" min="-180" max="180" step="any" required>
+                    <label for="place-longitude">Longitude:</label>
+                    <p class="small-note">Example: 2.3522</p>
+                    <input type="number" id="place-longitude" name="longitude" min="-180" max="180" step="any" required>
+                </fieldset>
 
-                <fieldset class="form-fieldset">
+                <fieldset class="form-fieldset add-place-section">
                     <legend>Amenities</legend>
+                    <p class="small-note">Select all amenities currently available at the property.</p>
                     <div id="amenities-checkboxes" class="amenities-checkbox-grid">
                         <!-- Populated dynamically -->
                     </div>
+                    <p id="amenities-loading" class="small-note" role="status" aria-live="polite">Loading amenities...</p>
                 </fieldset>
 
-                <label for="place-picture">Photo (optional):</label>
-                <input type="file" id="place-picture" name="picture" accept="image/*">
+                <fieldset class="form-fieldset add-place-section">
+                    <legend>Photo</legend>
+                    <label for="place-picture">Photo (optional):</label>
+                    <img id="place-picture-preview" class="hidden" aria-hidden="true" src="" alt="Selected photo preview">
+                    <input type="file" id="place-picture" name="picture" accept="image/*">
+                    <p id="place-picture-note" class="small-note">JPG or PNG recommended.</p>
+                </fieldset>
 
                 <div class="form-action-row">
-                    <button type="submit">Create Place</button>
+                    <button type="submit" id="add-place-submit">Create Place</button>
                     <a href="index.html" class="muted-inline-link">Cancel</a>
                 </div>
             </form>
@@ -82,6 +102,7 @@
         <p>&copy; 2024 HBnB. All rights reserved.</p>
     </footer>
     <script src="../static/js/utils.js"></script>
+    <script src="../static/js/auth-dropdown.js"></script>
     <script src="../static/js/auth.js"></script>
     <script src="../static/js/pages/add-place.js"></script>
 </body>

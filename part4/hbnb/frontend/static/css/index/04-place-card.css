@@ -1,0 +1,69 @@
+/* ===== PLACE CARD ===== */
+.place-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 180px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--card);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+    overflow: hidden;
+    opacity: 0;
+    animation: cardEntrance 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes cardEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.place-card:nth-child(1) { animation-delay: 0.05s; }
+.place-card:nth-child(2) { animation-delay: 0.1s; }
+.place-card:nth-child(3) { animation-delay: 0.15s; }
+.place-card:nth-child(4) { animation-delay: 0.2s; }
+.place-card:nth-child(5) { animation-delay: 0.25s; }
+.place-card:nth-child(6) { animation-delay: 0.3s; }
+.place-card:nth-child(7) { animation-delay: 0.35s; }
+.place-card:nth-child(8) { animation-delay: 0.4s; }
+.place-card:nth-child(n+9) { animation-delay: 0.45s; }
+
+.place-card:hover {
+    box-shadow: var(--shadow-lg); /* Overdrive deeper shadow */
+    transform: translateY(-5px); /* Overdrive dramatic lift */
+}
+
+.place-card h2 {
+    margin-bottom: var(--space-xs);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: var(--line-height-tight);
+}
+
+/* Price paragraph — tight grouping with h2 */
+.place-card-body > p:not([class]) {
+    margin-bottom: var(--space-md);
+    color: var(--brand);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.place-card > p,
+.place-card-body > p {
+    margin-bottom: 0.35rem;
+    color: var(--text-sec);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+

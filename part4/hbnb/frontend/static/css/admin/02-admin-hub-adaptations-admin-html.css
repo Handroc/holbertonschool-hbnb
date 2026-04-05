@@ -1,0 +1,144 @@
+/* ===== ADMIN HUB ADAPTATIONS (admin.html) ===== */
+.admin-hub-page .admin-page-head {
+    display: grid;
+    gap: var(--space-sm);
+}
+
+.admin-context-list {
+    margin: var(--space-xs) 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.42rem;
+}
+
+.admin-context-chip {
+    min-height: 30px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.62rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklch, var(--brand) 26%, var(--border));
+    background: color-mix(in oklch, var(--brand-light) 54%, var(--card));
+    color: color-mix(in oklch, var(--brand-dark) 66%, var(--text));
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+.admin-hub-page .admin-nav-list {
+    margin-top: var(--space-lg);
+    max-width: none;
+    display: grid;
+    gap: var(--space-sm);
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    overflow: visible;
+    container-type: inline-size;
+}
+
+.admin-hub-page .admin-nav-item {
+    border: 1px solid color-mix(in oklch, var(--brand) 20%, var(--border));
+    border-radius: var(--radius-sm);
+    background: linear-gradient(180deg, color-mix(in oklch, var(--brand) 8%, var(--card)), var(--card));
+    box-shadow: var(--shadow-xs);
+    padding: var(--space-md) var(--space-md);
+    min-height: 118px;
+    gap: var(--space-sm);
+    align-items: flex-start;
+}
+
+.admin-hub-page .admin-nav-item:active {
+    transform: translateY(1px);
+}
+
+.admin-hub-page .admin-nav-item:hover {
+    background: linear-gradient(180deg, color-mix(in oklch, var(--brand) 14%, var(--card)), color-mix(in oklch, var(--brand) 3%, var(--card)));
+    transform: translateY(-1px);
+}
+
+.admin-hub-page .admin-nav-item[data-workspace="users"] {
+    border-color: color-mix(in oklch, var(--brand) 30%, var(--border));
+}
+
+.admin-hub-page .admin-nav-item[data-workspace="amenities"] {
+    border-color: color-mix(in oklch, var(--info) 24%, var(--border));
+}
+
+.admin-hub-page .admin-nav-item[data-workspace="bookings"] {
+    border-color: color-mix(in oklch, var(--warning) 24%, var(--border));
+}
+
+.admin-hub-page .admin-nav-title {
+    font-size: clamp(1.02rem, 2.2vw, 1.14rem);
+    line-height: 1.2;
+}
+
+.admin-hub-page .admin-nav-desc {
+    color: color-mix(in oklch, var(--text-sec) 86%, var(--brand) 14%);
+    line-height: 1.45;
+    max-width: 34ch;
+}
+
+.admin-hub-page .admin-nav-arrow {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklch, var(--brand) 30%, var(--border));
+    background: color-mix(in oklch, var(--brand-light) 56%, var(--card));
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-left: auto;
+}
+
+@container (min-width: 42rem) {
+    .admin-hub-page .admin-nav-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .admin-hub-page .admin-nav-item[data-workspace="bookings"] {
+        grid-column: span 2;
+    }
+}
+
+@container (min-width: 66rem) {
+    .admin-hub-page .admin-nav-list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .admin-hub-page .admin-nav-item[data-workspace="bookings"] {
+        grid-column: auto;
+    }
+
+    .admin-hub-page .admin-nav-item {
+        min-height: 132px;
+    }
+}
+
+@supports not (container-type: inline-size) {
+    @media (min-width: 680px) {
+        .admin-hub-page .admin-nav-list {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .admin-hub-page .admin-nav-item[data-workspace="bookings"] {
+            grid-column: span 2;
+        }
+    }
+
+    @media (min-width: 1080px) {
+        .admin-hub-page .admin-nav-list {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .admin-hub-page .admin-nav-item[data-workspace="bookings"] {
+            grid-column: auto;
+        }
+    }
+}
+

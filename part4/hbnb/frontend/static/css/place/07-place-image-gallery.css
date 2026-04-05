@@ -1,0 +1,56 @@
+/* ===== PLACE IMAGE GALLERY ===== */
+.place-gallery {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-xl);
+}
+.place-gallery img {
+    width: 160px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: opacity var(--transition);
+}
+.place-gallery img:hover { opacity: 0.85; }
+.gallery-hero {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: var(--radius);
+    margin-bottom: var(--space-md);
+    display: block;
+}
+.gallery-thumb-delete {
+    display: inline-block;
+    position: relative;
+}
+.gallery-thumb-delete button {
+    position: absolute;
+    top: 2px; right: 2px;
+    background: rgba(220,38,38,0.85);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 20px; height: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    line-height: 20px;
+    text-align: center;
+    padding: 0;
+}
+
+#place-picture-preview {
+    max-width: 200px;
+    max-height: 150px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 0.5rem;
+    object-fit: cover;
+}
+
+#place-images-gallery {
+    margin-bottom: 0.5rem;
+}
+

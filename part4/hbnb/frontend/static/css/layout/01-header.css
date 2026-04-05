@@ -1,0 +1,26 @@
+/* ===== HEADER ===== */
+header {
+    background: var(--header-bg);
+    color: var(--text);
+    padding: 0 2rem;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 2px solid var(--brand);
+}
+
+header > a {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 42px;
+    display: block;
+}
+

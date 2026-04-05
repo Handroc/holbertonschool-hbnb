@@ -1,0 +1,12 @@
+/* ===== FOCUS RINGS (keyboard navigation) ===== */
+.btn--primary:focus-visible,
+.details-button:focus-visible,
+.form button[type="submit"]:focus-visible,
+.delete-button:focus-visible,
+.pagination-btn:focus-visible,
+.action-btn:focus-visible,
+.btn-secondary:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(147,157,33,0.25);
+}
+

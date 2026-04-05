@@ -22,21 +22,31 @@
     <main class="auth-layout">
         <div class="auth-card">
             <form id="login-form">
-            <h2>Welcome back</h2>
-            <p class="login-tagline">Sign in to find your next stay.</p>
-            <p id="login-error" class="form-feedback-error hidden" aria-live="polite" aria-hidden="true">Invalid email or password.</p>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <button type="submit">Login</button>
-        </form>
+                <h2>Welcome back</h2>
+                <p class="login-tagline">Sign in to continue planning your next stay.</p>
+                <p class="login-helper">Use the email and password tied to your HBnB account.</p>
+                <p id="login-error" class="form-feedback-error hidden" role="alert" aria-live="assertive" aria-hidden="true"></p>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" autocomplete="email" inputmode="email" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" autocomplete="current-password" required>
+
+                <div class="login-support-row">
+                    <p class="small-note login-help-text">Need help signing in? Contact your host admin.</p>
+                    <a href="index.html" class="muted-inline-link">Back to browse</a>
+                </div>
+
+                <button type="submit" id="login-submit">Sign in</button>
+            </form>
         </div>
     </main>
     <footer>
         <p>&copy; 2025 HBnB. All rights reserved.</p>
     </footer>
     <script src="../static/js/utils.js"></script>
+    <script src="../static/js/auth-dropdown.js"></script>
     <script src="../static/js/auth.js"></script>
     <script src="../static/js/pages/login.js"></script>
 </body>

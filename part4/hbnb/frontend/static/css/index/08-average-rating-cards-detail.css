@@ -1,0 +1,103 @@
+/* ===== AVERAGE RATING (cards + detail) ===== */
+.avg-rating-row {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-bottom: 0.35rem;
+}
+
+.detail-avg-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-bottom: 0.6rem;
+    background: var(--brand-light);
+    border: 1px solid var(--rating-border);
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+}
+
+.avg-star {
+    color: var(--warning);
+    font-size: 1rem;
+}
+
+.avg-val {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text);
+}
+
+.avg-total {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.no-reviews {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 0.5rem;
+}
+
+.empty-state {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-2xl) var(--space-md);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    margin: var(--space-md) 0;
+}
+
+.empty-state-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--skeleton-bg);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-md);
+}
+
+.empty-state h3 {
+    margin-bottom: var(--space-xs);
+    color: var(--text);
+}
+
+.empty-state p {
+    color: var(--text-sec);
+    max-width: 400px;
+    margin: 0 auto var(--space-xl) auto;
+}
+
+.empty-clear-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 var(--space-lg);
+    background: var(--brand);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    cursor: pointer;
+    transition: background var(--transition), transform 0.1s ease;
+}
+
+.empty-clear-btn:hover {
+    background: var(--brand-dark);
+}
+
+.empty-clear-btn:active {
+    transform: scale(0.97);
+}
+

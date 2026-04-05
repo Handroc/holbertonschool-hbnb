@@ -1,0 +1,175 @@
+/* ===== WIDE-VIEWPORT EDITORIAL GRID ===== */
+@media (min-width: 1060px) {
+    /* Rhythmic asymmetric grid: every 5th card spans 2 columns (1, 6, 11...) */
+
+    /* Skeletons match asymmetric editorial grid */
+    #places-container .place-card-skeleton:nth-child(5n + 1) {
+        grid-column: span 2;
+        border-top: 4px solid var(--border);
+    }
+    #places-container .place-card-skeleton:nth-child(5n + 1) .skeleton-img {
+        height: 420px;
+    }
+    #places-container .place-card-skeleton:nth-child(5n + 1) .skeleton-body {
+        padding: var(--space-xl) var(--space-2xl);
+    }
+
+    #places-container .place-card:nth-child(5n + 1) {
+        grid-column: span 2;
+        border-top: 4px solid var(--brand); /* Colorize editorial feature */
+        background: var(--brand-light); /* Gentle olive tint */
+    }
+
+    #places-container .place-card:nth-child(5n + 1) .place-card-img {
+        height: 420px; /* Grand scale imagery */
+        border-radius: var(--radius) var(--radius) 0 0;
+    }
+
+    #places-container .place-card:nth-child(5n + 1) .place-card-body {
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    flex: 1;
+}
+
+    #places-container .place-card:nth-child(5n + 1) h2 {
+        font-size: var(--text-2xl);
+        margin-bottom: var(--space-xs);
+    }
+    
+    #places-container .place-card:nth-child(5n + 1) .place-card-desc {
+        -webkit-line-clamp: 4; /* Show more story for hero cards */
+        line-clamp: 4;
+        font-size: var(--text-base);
+        line-height: var(--line-height-loose);
+        margin-bottom: var(--space-md);
+    }
+}
+
+
+.active-filters-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+    min-height: 0;
+}
+
+.active-filters-list:empty {
+    margin-bottom: 0;
+}
+
+.filter-pill {
+    display: inline-flex;
+    align-items: center;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text-sec);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: var(--text-sm);
+    cursor: pointer;
+    box-shadow: var(--shadow-xs);
+    transition: background var(--transition), border-color var(--transition);
+}
+
+.filter-pill:hover {
+    background: var(--bg);
+    border-color: var(--text-muted);
+}
+
+.filter-pill-close {
+    margin-left: 0.5rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.filter-pill:hover .filter-pill-close {
+    color: var(--text);
+}
+
+@media (max-width: 900px) {
+    #filter {
+        padding: var(--space-md);
+    }
+
+    .filter-primary,
+    .filter-extra-inner {
+        flex-wrap: wrap;
+        align-items: stretch;
+    }
+
+    .filter-group,
+    .amenity-dropdown {
+        width: 100%;
+    }
+
+    #price-filter,
+    #sort-select,
+    #search-input,
+    .amenity-dropdown-toggle,
+    #avail-from,
+    #avail-to {
+        width: 100%;
+        min-width: 0;
+    }
+
+    #search-input {
+        width: 100%;
+    }
+
+    #search-input:focus {
+        width: 100%;
+    }
+
+    #places-container {
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+        gap: var(--space-md);
+    }
+
+    .place-card-img,
+    .skeleton-img {
+        height: 220px;
+    }
+}
+
+@media (max-width: 620px) {
+    .place-card-body {
+        padding: var(--space-md);
+    }
+
+    .place-card-footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .place-card-footer .details-button,
+    .place-card-footer .btn-danger-subtle,
+    .place-card-footer .wish-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .place-card-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .place-card-actions a,
+    .place-card-actions button {
+        width: 100%;
+    }
+
+    .filter-toggle-btn,
+    .clear-filters-btn {
+        width: 100%;
+    }
+
+    .active-filters-list {
+        gap: var(--space-xs);
+    }
+}

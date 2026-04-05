@@ -42,56 +42,74 @@
         </nav>
     </header>
     <main>
-        <section id="profile-section">
-            <h1 id="profile-title">My Profile</h1>
-            <p id="profile-email"></p>
+        <section id="profile-section" class="profile-shell">
+            <header class="profile-shell-head">
+                <h1 id="profile-title">My Profile</h1>
+                <p id="profile-email"></p>
+                <p class="profile-shell-intro">Update your account details and keep your host profile current.</p>
+            </header>
 
-            <!-- Avatar -->
-            <div class="avatar-section">
-                <div id="avatar-placeholder" class="avatar-placeholder">No Photo</div>
-                <img id="avatar-preview" class="avatar-preview hidden" aria-hidden="true" src="" alt="Profile picture">
-                <form id="avatar-form">
-                    <label for="avatar-input" class="avatar-upload-label">Change Photo</label>
-                    <input type="file" id="avatar-input" class="hidden" aria-hidden="true" accept="image/*">
-                    <p id="avatar-error" class="form-feedback-error hidden" aria-live="polite" aria-hidden="true"></p>
-                    <p id="avatar-success" class="form-feedback-success hidden" aria-live="polite" aria-hidden="true"></p>
-                </form>
+            <div class="profile-shell-grid">
+                <section class="profile-panel profile-panel--identity" aria-labelledby="profile-details-heading">
+                    <h2 id="profile-details-heading" class="profile-panel-title">Account details</h2>
+                    <p class="small-note profile-panel-note">Changes are saved immediately when you submit this form.</p>
+
+                    <p id="profile-error" class="form-feedback-error hidden" aria-live="polite" aria-hidden="true"></p>
+                    <p id="profile-success" class="form-feedback-success hidden" aria-live="polite" aria-hidden="true"></p>
+
+                    <form id="profile-form" class="form">
+                        <label for="first-name">First Name:</label>
+                        <input type="text" id="first-name" name="first_name" required>
+
+                        <label for="last-name">Last Name:</label>
+                        <input type="text" id="last-name" name="last_name" required>
+
+                        <!-- Admin-only: email editing -->
+                        <label id="email-label" for="email-input" class="hidden" aria-hidden="true">Email:</label>
+                        <input type="email" id="email-input" name="email" class="hidden" aria-hidden="true">
+                        <p id="email-admin-note" class="small-note hidden" aria-hidden="true">Admin mode: editing email changes the user's login identifier.</p>
+
+                        <label for="password-input">New Password:</label>
+                        <input type="password" id="password-input" name="password" placeholder="Leave blank to keep current">
+                        <p class="small-note">Leave this blank if you do not want to change your current password.</p>
+
+                        <button type="submit" form="profile-form">Save Changes</button>
+                    </form>
+                </section>
+
+                <section class="profile-panel profile-panel--avatar" aria-labelledby="profile-photo-heading">
+                    <h2 id="profile-photo-heading" class="profile-panel-title">Profile photo</h2>
+                    <p class="small-note profile-panel-note">Use JPG, PNG, or WEBP. Maximum file size: 5 MB.</p>
+                    <div class="avatar-section">
+                        <div id="avatar-placeholder" class="avatar-placeholder">No Photo</div>
+                        <img id="avatar-preview" class="avatar-preview hidden" aria-hidden="true" src="" alt="Profile picture">
+                        <form id="avatar-form">
+                            <label for="avatar-input" class="avatar-upload-label">Change Photo</label>
+                            <input type="file" id="avatar-input" class="hidden" aria-hidden="true" accept="image/*">
+                            <p id="avatar-error" class="form-feedback-error hidden" aria-live="polite" aria-hidden="true"></p>
+                            <p id="avatar-success" class="form-feedback-success hidden" aria-live="polite" aria-hidden="true"></p>
+                        </form>
+                    </div>
+                </section>
             </div>
 
-            <p id="profile-error" class="form-feedback-error hidden" aria-live="polite" aria-hidden="true"></p>
-            <p id="profile-success" class="form-feedback-success hidden" aria-live="polite" aria-hidden="true"></p>
-
-            <form id="profile-form" class="form">
-                <label for="first-name">First Name:</label>
-                <input type="text" id="first-name" name="first_name" required>
-
-                <label for="last-name">Last Name:</label>
-                <input type="text" id="last-name" name="last_name" required>
-
-                <!-- Admin-only: email editing -->
-                <label id="email-label" for="email-input" class="hidden" aria-hidden="true">Email:</label>
-                <input type="email" id="email-input" name="email" class="hidden" aria-hidden="true">
-
-                <label for="password-input">New Password:</label>
-                <input type="password" id="password-input" name="password" placeholder="Leave blank to keep current">
-
-                <button type="submit" form="profile-form">Save Changes</button>
-
-            </form>
-            
-            <div class="danger-zone">
-                <div class="danger-zone-content">
-                    <h3>Danger Zone</h3>
-                    <p>Once you delete your account, there is no going back. Please be certain.</p>
+            <section class="profile-panel profile-panel--danger" aria-labelledby="danger-zone-heading">
+                <div class="danger-zone">
+                    <div class="danger-zone-content">
+                        <h2 id="danger-zone-heading">Danger Zone</h2>
+                        <p>Once you delete your account, there is no going back. Please be certain.</p>
+                        <p class="small-note">You will be asked to confirm with a typed keyword before deletion.</p>
+                    </div>
+                    <button id="delete-btn" class="delete-button">Delete Account</button>
                 </div>
-                <button id="delete-btn" class="delete-button">Delete Account</button>
-            </div>
+            </section>
         </section>
     </main>
     <footer>
         <p>&copy; 2025 HBnB. All rights reserved.</p>
     </footer>
     <script src="../static/js/utils.js"></script>
+    <script src="../static/js/auth-dropdown.js"></script>
     <script src="../static/js/auth.js"></script>
     <script src="../static/js/pages/profile.js"></script>
 </body>

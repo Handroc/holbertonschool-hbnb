@@ -1,0 +1,158 @@
+/* ===== REVIEW CATEGORIES ===== */
+.review-categories { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm); margin: 0.5rem 0 0.75rem; }
+.review-cat-row { display: flex; align-items: center; gap: var(--space-sm); font-size: 0.85rem; min-width: 0; }
+.review-cat-row label { flex: 1 1 auto; min-width: 110px; color: var(--text-sec); }
+.review-cat-row select {
+    flex: 0 0 clamp(4.6rem, 28vw, 7.4rem);
+    width: auto;
+    max-width: 100%;
+    min-width: 0;
+}
+.place-cat-averages { display: flex; flex-direction: column; gap: 0.35rem; margin: 0.75rem 0; font-size: 0.85rem; }
+.cat-avg-row { display: flex; align-items: center; gap: var(--space-sm); }
+.cat-avg-label { min-width: 110px; color: var(--text-sec); font-size: 0.82rem; }
+.cat-avg-bar-wrap { flex: 1; background: var(--border); border-radius: 99px; height: 6px; overflow: hidden; }
+.cat-avg-bar { height: 100%; background: var(--brand); border-radius: 99px; transition: width 0.4s ease; }
+.cat-avg-val { min-width: 24px; text-align: right; font-weight: 600; color: var(--text); }
+.cat-avg-row .cat-name { min-width: 110px; color: var(--text-sec); }
+
+/* Two Column Layout Grid */
+.place-layout-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    max-width: var(--container-lg);
+    margin: 0 auto;
+    padding: var(--space-xl) var(--space-md);
+}
+
+@media (min-width: 860px) {
+    .place-layout-grid {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+    
+    .place-main-column {
+        flex: 1;
+        min-width: 0; /* Prevent flex overflow */
+    }
+    
+    .place-sidebar {
+        width: 380px;
+        flex-shrink: 0;
+        position: sticky;
+        top: 100px; /* Offset for spacing */
+    }
+}
+
+/* Enhancements directly inside the main column */
+.place-main-column > section {
+    margin-bottom: var(--space-2xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--border);
+}
+
+.place-main-column > section:last-child {
+    border-bottom: none;
+}
+
+#book-place {
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05); /* Soft shadow */
+}
+
+.amenity-item {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 12px;
+}
+.amenity-icon {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+.place-booking-card {
+    padding: var(--space-lg);
+    margin-top: 0;
+}
+
+.place-booking-title {
+    margin-bottom: var(--space-md);
+}
+
+.place-booking-submit {
+    margin-top: var(--space-sm);
+}
+
+@media (max-width: 860px) {
+    .place-layout-grid {
+        padding: var(--space-md);
+    }
+
+    .place-info {
+        padding: var(--space-lg);
+    }
+
+    .place-detail-img {
+        max-height: 300px;
+    }
+
+    .place-detail-img img {
+        height: 300px;
+    }
+
+    #place-map {
+        height: 260px;
+    }
+
+    .review-categories {
+        grid-template-columns: 1fr;
+    }
+
+    .review-cat-row {
+        justify-content: flex-start;
+    }
+
+    .review-cat-row label,
+    .cat-avg-label,
+    .cat-avg-row .cat-name {
+        min-width: 0;
+    }
+}
+
+@media (max-width: 620px) {
+    .place-info {
+        padding: var(--space-md);
+    }
+
+    .place-gallery {
+        gap: 0.5rem;
+    }
+
+    .place-gallery img {
+        width: calc(50% - 0.25rem);
+        height: 96px;
+    }
+
+    #place-picture-preview {
+        max-width: 100%;
+        width: 100%;
+        max-height: 220px;
+    }
+
+    .gallery-hero {
+        max-height: 260px;
+    }
+
+    .review-card-header {
+        align-items: flex-start;
+    }
+
+    #place-map {
+        height: 220px;
+    }
+}

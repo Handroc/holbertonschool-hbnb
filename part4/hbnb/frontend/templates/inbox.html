@@ -42,34 +42,48 @@
         </nav>
     </header>
     <main>
-        <h1>Inbox</h1>
-        <div id="inbox-tabs" class="tabs-wrap">
-            <button id="tab-inbox" class="tab-btn tab-btn--active">Received</button>
-            <button id="tab-sent" class="tab-btn">Sent</button>
+        <div class="inbox-head">
+            <h1>Inbox</h1>
+            <a href="index.html" id="inbox-new-message-link" class="btn--primary">Find a host to message</a>
         </div>
-        <div id="inbox-list" class="inbox-list">
-            <!-- populated dynamically -->
-        </div>
+        <section class="inbox-layout" aria-label="Messages">
+            <p id="inbox-head-note" class="inbox-head-note">Conversations start from a host profile. Open a place and select Message to begin.</p>
+            <div id="inbox-feedback" class="inbox-feedback hidden" role="status" aria-live="polite" aria-hidden="true"></div>
+            <div id="inbox-tabs" class="tabs-wrap" role="tablist" aria-label="Inbox folders">
+                <button id="tab-inbox" class="tab-btn tab-btn--active" type="button" role="tab" aria-selected="true">Received messages</button>
+                <button id="tab-sent" class="tab-btn" type="button" role="tab" aria-selected="false">Sent messages</button>
+            </div>
+            <div id="inbox-triage" class="inbox-triage" aria-live="polite">
+                <p id="inbox-triage-summary" class="inbox-triage-summary">Showing received: 0</p>
+                <button id="inbox-triage-switch" type="button" class="btn-outline inbox-triage-switch inbox-secondary-action">View sent messages</button>
+            </div>
+            <p id="inbox-activation-hint" class="inbox-activation-hint hidden" aria-hidden="true"></p>
+            <div id="inbox-list" class="inbox-list">
+                <!-- populated dynamically -->
+            </div>
 
-        <!-- Compose / reply panel -->
-        <div id="compose-panel" class="compose-panel hidden" aria-hidden="true">
-            <h2 id="compose-title">New Message</h2>
-            <form id="compose-form" class="form">
-                <input type="hidden" id="compose-recipient-id">
-                <label for="compose-recipient-name">To:</label>
-                <input type="text" id="compose-recipient-name" readonly>
-                <label for="compose-body">Message:</label>
-                <textarea id="compose-body" required rows="4"></textarea>
-                <button type="submit">Send</button>
-                <button type="button" id="compose-cancel" class="btn-secondary">Cancel</button>
-            </form>
-        </div>
+            <!-- Compose / reply panel -->
+            <div id="compose-panel" class="compose-panel hidden" aria-hidden="true">
+                <h2 id="compose-title">New Message</h2>
+                <form id="compose-form" class="form">
+                    <input type="hidden" id="compose-recipient-id">
+                    <label for="compose-recipient-name">Host or guest</label>
+                    <input type="text" id="compose-recipient-name" readonly placeholder="Select a host profile to begin">
+                    <label for="compose-body">Message</label>
+                    <textarea id="compose-body" required rows="4" placeholder="Share dates and key questions so they can reply quickly"></textarea>
+                    <button type="submit">Send</button>
+                    <button type="button" id="compose-cancel" class="btn-secondary">Cancel</button>
+                </form>
+            </div>
+        </section>
     </main>
     <footer>
         <p>&copy; 2025 HBnB. All rights reserved.</p>
     </footer>
     <script src="../static/js/utils.js"></script>
+    <script src="../static/js/auth-dropdown.js"></script>
     <script src="../static/js/auth.js"></script>
+    <script src="../static/js/pages/inbox-render.js"></script>
     <script src="../static/js/pages/inbox.js"></script>
 </body>
 </html>

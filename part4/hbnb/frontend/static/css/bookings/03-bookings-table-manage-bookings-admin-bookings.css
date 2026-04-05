@@ -1,0 +1,177 @@
+/* ===== BOOKINGS TABLE (manage bookings + admin bookings) ===== */
+.table-wrapper {
+    overflow-x: auto;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+}
+
+.bookings-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card);
+}
+
+.bookings-table th,
+.bookings-table td {
+    padding: 0.9rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.45;
+    vertical-align: middle;
+}
+
+.bookings-table th {
+    background: var(--footer-bg);
+    font-weight: 700;
+    font-size: 0.78rem;
+    text-transform: none;
+    letter-spacing: 0.02em;
+    color: var(--text-sec);
+}
+
+.bookings-table tr:last-child td {
+    border-bottom: none;
+}
+
+.bookings-table tbody tr {
+    transition: background var(--transition);
+}
+
+.bookings-table tbody tr:nth-child(even) {
+    background: color-mix(in oklch, var(--bg) 70%, var(--card));
+}
+
+.bookings-table tbody tr:hover {
+    background: color-mix(in oklch, var(--brand) 8%, var(--bg));
+}
+
+.bookings-table td {
+    color: var(--text-sec);
+    font-size: 0.9rem;
+}
+
+.bookings-table td:first-child {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.bookings-table td:nth-child(3),
+.bookings-table td:nth-child(4),
+.bookings-table td:nth-child(5),
+.bookings-table td:nth-child(6),
+.bookings-table th:nth-child(3),
+.bookings-table th:nth-child(4),
+.bookings-table th:nth-child(5),
+.bookings-table th:nth-child(6) {
+    white-space: nowrap;
+}
+
+.bookings-table th:last-child,
+.bookings-table td:last-child {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.booking-actions {
+    display: flex;
+    gap: 0.35rem;
+    flex-wrap: nowrap;
+}
+
+.manage-bookings-head {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.manage-bookings-head h1 {
+    margin-bottom: 0;
+}
+
+@media (max-width: 760px) {
+    .booking-card {
+        padding: 0.95rem;
+    }
+
+    .booking-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.45rem;
+    }
+
+    .table-wrapper {
+        border: none;
+        box-shadow: none;
+        overflow: visible;
+    }
+
+    .bookings-table {
+        display: block;
+        border: none;
+        box-shadow: none;
+        background: transparent;
+    }
+
+    .bookings-table thead {
+        display: none;
+    }
+
+    .bookings-table tbody {
+        display: grid;
+        gap: var(--space-sm);
+    }
+
+    .bookings-table tr {
+        display: block;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        background: var(--card);
+        box-shadow: var(--shadow-xs);
+        overflow: hidden;
+    }
+
+    .bookings-table td {
+        display: grid;
+        grid-template-columns: minmax(6.1rem, 40%) minmax(0, 1fr);
+        gap: var(--space-xs);
+        white-space: normal;
+        text-align: left;
+        padding: 0.56rem 0.7rem;
+        border-bottom: 1px dashed var(--border);
+    }
+
+    .bookings-table td::before {
+        content: attr(data-label);
+        font-size: var(--text-xs);
+        color: var(--text-muted);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+
+    .bookings-table td:last-child {
+        border-bottom: none;
+    }
+
+    .bookings-table td:last-child,
+    .bookings-table th:last-child {
+        text-align: left;
+    }
+
+    .booking-actions {
+        flex-wrap: wrap;
+    }
+
+    .booking-actions .action-btn {
+        width: 100%;
+    }
+
+    .manage-bookings-head {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.65rem;
+    }
+}

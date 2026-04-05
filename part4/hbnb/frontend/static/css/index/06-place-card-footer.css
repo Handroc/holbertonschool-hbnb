@@ -1,0 +1,60 @@
+/* ===== PLACE CARD FOOTER ===== */
+.place-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    margin-top: auto;
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--border);
+    width: 100%;
+}
+
+.place-owner-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.place-owner-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border);
+    background: var(--avatar-empty);
+    display: block;
+    transition: border-color var(--transition);
+}
+
+.place-owner-link:hover .place-owner-avatar {
+    border-color: var(--brand);
+}
+
+.place-owner-avatar--empty {
+    background: var(--avatar-empty) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23a09890'%3E%3Cpath d='M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z'/%3E%3C/svg%3E") center/60% no-repeat;
+}
+
+.place-owner-link[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--text);
+    color: var(--white);
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 4px 9px;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.place-owner-link[data-tooltip]:hover::after {
+    opacity: 1;
+}
+

@@ -1,0 +1,29 @@
+/* ===== MY-PLACES CARD LAYOUT ===== */
+.place-card-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    margin-bottom: 0.25rem;
+}
+.price-unit {
+    font-weight: 400;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+.place-card-actions {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.place-card-actions .details-button,
+.place-card-actions .btn--primary,
+.place-card-actions .btn-secondary,
+.place-card-actions .btn--secondary {
+    flex: 1;
+    text-align: center;
+    min-width: 80px;
+}
+

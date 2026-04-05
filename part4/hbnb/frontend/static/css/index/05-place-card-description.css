@@ -1,0 +1,14 @@
+/* ===== PLACE CARD DESCRIPTION ===== */
+.place-card-desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    line-height: 1.45;
+    font-weight: 400;
+}
+

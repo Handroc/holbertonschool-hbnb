@@ -1,0 +1,14 @@
+/* ===== ADD REVIEW SECTION ===== */
+.add-review {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+}
+
+.add-review h2 {
+    margin-bottom: var(--space-md);
+    color: var(--text);
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+

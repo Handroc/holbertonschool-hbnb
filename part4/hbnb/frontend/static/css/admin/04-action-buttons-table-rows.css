@@ -1,0 +1,267 @@
+/* ===== ACTION BUTTONS (table rows) ===== */
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 999px;
+    background: var(--brand);
+    color: #fff;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    line-height: 1;
+    font-family: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background var(--transition), color var(--transition), box-shadow var(--transition);
+}
+
+.action-btn:hover {
+    background: var(--brand-dark);
+    text-decoration: none;
+}
+
+.action-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.admin-table .action-btn,
+.bookings-table .action-btn {
+    padding: 0.34rem 0.75rem;
+    border-radius: var(--radius-sm);
+    font-size: var(--text-xs);
+}
+
+.admin-table .action-btn:not(.danger),
+.bookings-table .action-btn:not(.danger) {
+    background: linear-gradient(180deg, color-mix(in oklch, var(--brand) 24%, var(--card)), color-mix(in oklch, var(--brand) 14%, var(--card)));
+    color: var(--brand-dark);
+}
+
+.admin-table .action-btn:not(.danger):hover,
+.bookings-table .action-btn:not(.danger):hover {
+    background: color-mix(in oklch, var(--brand) 86%, var(--brand-dark));
+    color: #fff;
+}
+
+.action-btn.danger {
+    background: color-mix(in oklch, var(--red) 20%, var(--card));
+    color: var(--red-dark);
+}
+
+.action-btn.danger:hover {
+    background: var(--red-dark);
+    color: #fff;
+}
+
+.action-btn.action-btn--confirm {
+    background: color-mix(in oklch, var(--warning) 35%, var(--card));
+    color: color-mix(in oklch, var(--warning) 82%, var(--text));
+}
+
+.action-btn.action-btn--confirm:hover {
+    background: color-mix(in oklch, var(--warning) 58%, var(--card));
+}
+
+
+/* Layout hierarchy for sections */
+main section {
+    margin-bottom: var(--space-2xl);
+}
+main section:last-child {
+    margin-bottom: 0;
+}
+.admin-actions {
+    display: flex;
+    gap: var(--space-xs);
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.admin-table td:last-child .admin-actions,
+.bookings-table td:last-child .admin-actions {
+    width: 100%;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+}
+
+.admin-table--amenities {
+    width: min(100%, 44rem);
+}
+
+.admin-table--amenities th:first-child,
+.admin-table--amenities td:first-child {
+    width: 100%;
+}
+
+.admin-table--amenities th:last-child,
+.admin-table--amenities td:last-child {
+    width: 1%;
+}
+
+.admin-table-empty {
+    text-align: center;
+    color: var(--text-muted);
+    padding: var(--space-lg);
+}
+.admin-table-error {
+    color: var(--red);
+    padding: var(--space-lg);
+}
+
+@media (max-width: 860px) {
+    .admin-page-title-row {
+        align-items: flex-start;
+    }
+
+    .admin-page-head {
+        padding: var(--space-sm) var(--space-md);
+    }
+
+    .admin-panel--table .table-wrapper {
+        overflow: visible;
+        border: none;
+        box-shadow: none;
+    }
+
+    .admin-panel--table .admin-table,
+    .admin-panel--table .bookings-table {
+        display: block;
+        border: none;
+        box-shadow: none;
+        background: transparent;
+    }
+
+    .admin-panel--table .admin-table thead,
+    .admin-panel--table .bookings-table thead {
+        display: none;
+    }
+
+    .admin-panel--table .admin-table tbody,
+    .admin-panel--table .bookings-table tbody {
+        display: grid;
+        gap: var(--space-sm);
+    }
+
+    .admin-panel--table .admin-table tr,
+    .admin-panel--table .bookings-table tr {
+        display: block;
+        border: 1px solid color-mix(in oklch, var(--brand) 20%, var(--border));
+        border-radius: var(--radius-sm);
+        background: color-mix(in oklch, var(--brand) 6%, var(--card));
+        box-shadow: var(--shadow-xs);
+        overflow: hidden;
+    }
+
+    .admin-panel--table .admin-table td,
+    .admin-panel--table .bookings-table td {
+        display: grid;
+        grid-template-columns: minmax(6.4rem, 40%) minmax(0, 1fr);
+        gap: var(--space-xs);
+        align-items: start;
+        white-space: normal;
+        text-align: left;
+        padding: 0.56rem var(--space-sm);
+        border-bottom: 1px dashed color-mix(in oklch, var(--brand) 20%, var(--border));
+    }
+
+    .admin-panel--table .admin-table td::before,
+    .admin-panel--table .bookings-table td::before {
+        content: attr(data-label);
+        font-size: var(--text-xs);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: color-mix(in oklch, var(--brand) 34%, var(--text-muted));
+    }
+
+    .admin-panel--table .admin-table td:last-child,
+    .admin-panel--table .bookings-table td:last-child {
+        border-bottom: none;
+    }
+
+    .admin-panel--table .admin-table td:last-child .admin-actions,
+    .admin-panel--table .bookings-table td:last-child .admin-actions {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        width: auto;
+    }
+
+    .admin-panel--table .admin-table .admin-table-empty,
+    .admin-panel--table .bookings-table .admin-table-empty,
+    .admin-panel--table .bookings-table .admin-table-error {
+        display: block;
+        text-align: left;
+    }
+
+    .admin-panel--table .admin-table .admin-table-empty::before,
+    .admin-panel--table .bookings-table .admin-table-empty::before,
+    .admin-panel--table .bookings-table .admin-table-error::before {
+        content: none;
+    }
+
+    .admin-inline-status {
+        flex-wrap: wrap;
+    }
+
+    .admin-inline-status__dismiss {
+        margin-left: auto;
+    }
+}
+
+@media (max-width: 560px) {
+    .admin-context-list {
+        gap: 0.34rem;
+    }
+
+    .admin-context-chip {
+        min-height: 28px;
+        font-size: 0.72rem;
+    }
+
+    .admin-hub-page .admin-nav-item {
+        min-height: 104px;
+        padding: var(--space-sm) var(--space-sm);
+    }
+
+    .admin-hub-page .admin-nav-desc {
+        max-width: none;
+        font-size: 0.84rem;
+    }
+
+    .admin-hub-page .admin-nav-arrow {
+        width: 1.86rem;
+        height: 1.86rem;
+    }
+}
+
+@media (min-width: 980px) {
+    .admin-workspace {
+        grid-template-columns: minmax(18rem, 23rem) minmax(0, 1fr);
+    }
+
+    .admin-panel--form {
+        position: sticky;
+        top: calc(var(--space-lg) + 0.25rem);
+    }
+
+    .admin-panel--table-full {
+        position: static;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .admin-panel,
+    .admin-nav-item,
+    .admin-nav-arrow {
+        transition: none;
+    }
+
+    .admin-hub-page .admin-nav-item,
+    .admin-hub-page .admin-nav-item:hover {
+        transform: none;
+    }
+}

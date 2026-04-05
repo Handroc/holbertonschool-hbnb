@@ -1,0 +1,33 @@
+/* ===== PRIMARY BUTTON ===== */
+.btn--primary,
+.details-button,
+.form button[type="submit"],
+.pagination-btn {
+    background: var(--brand);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(147,157,33,0.45);
+}
+
+.btn--primary:hover:not(:disabled),
+.details-button:hover,
+.form button[type="submit"]:hover,
+.pagination-btn:hover:not(:disabled) {
+    background: var(--brand-dark);
+    box-shadow: 0 4px 14px rgba(147,157,33,0.5);
+    transform: translateY(-1px);
+}
+
+.details-button::after {
+    content: '→';
+    opacity: 0;
+    transform: translateX(-5px);
+    transition: opacity var(--transition), transform var(--transition);
+    font-size: var(--text-base);
+    line-height: 1;
+}
+
+.details-button:hover::after {
+    opacity: 1;
+    transform: translateX(0);
+}
+

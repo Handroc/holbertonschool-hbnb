@@ -6,11 +6,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const tokenIsExpired = !!(jwtPayload && typeof jwtPayload.exp === 'number' && (Date.now() / 1000) >= jwtPayload.exp);
     const tokenInvalid = !!token && !jwtPayload;
     let isAuthenticated = !!token && !!jwtPayload && !tokenIsExpired;
+    const initialSessionMessage = token && (tokenIsExpired || tokenInvalid)
+        ? (tokenIsExpired
+            ? 'Your session expired. Please sign in again.'
+            : 'Your session token is no longer valid. Please sign in again.')
+        : '';
 
     const setVisibility = (element, isVisible) => {
         if (!element) return;
         element.classList.toggle('hidden', !isVisible);
         element.setAttribute('aria-hidden', isVisible ? 'false' : 'true');
+    };
+
+    const clearAuthCookie = () => {
+        document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
     };
 
     // Toggle login / logout links
@@ -70,21 +79,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    if (token && (tokenIsExpired || tokenInvalid)) {
-        document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-        isAuthenticated = false;
-        showSessionNotice(tokenIsExpired
-            ? 'Your session expired. Please sign in again.'
-            : 'Your session token is no longer valid. Please sign in again.');
-    }
-
     setVisibility(loginLink, !isAuthenticated);
     setVisibility(logoutLink, isAuthenticated);
     setVisibility(logoutMenuLink, false);
 
     const handleLogout = (e) => {
         e.preventDefault();
-        document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+        clearAuthCookie();
         window.location.href = 'index.html';
     };
 
@@ -167,6 +168,20 @@ document.addEventListener('DOMContentLoaded', () => {
         applyResponsiveNavDensity();
     };
 
+    const forceSessionExpired = ({
+        noticeMessage = 'Your session expired. Please sign in again.',
+        announceMessage = 'Session expired. Please sign in again.',
+        clearCookie = true,
+    } = {}) => {
+        if (!isAuthenticated && sessionNoticeShown) return;
+        if (clearCookie) clearAuthCookie();
+        isAuthenticated = false;
+        stopUnreadPolling();
+        syncAuthVisibility();
+        showSessionNotice(noticeMessage);
+        announceNav(announceMessage);
+    };
+
     const stopUnreadPolling = () => {
         if (inboxPollInterval) {
             clearInterval(inboxPollInterval);
@@ -199,188 +214,57 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    syncAuthVisibility();
+    if (initialSessionMessage) {
+        forceSessionExpired({
+            noticeMessage: initialSessionMessage,
+            announceMessage: 'Session expired. Please sign in again to continue.',
+            clearCookie: true,
+        });
+    } else {
+        syncAuthVisibility();
+    }
+
+    window.addEventListener('hbnb:session-expired', (event) => {
+        const detail = event && event.detail ? event.detail : {};
+        forceSessionExpired({
+            noticeMessage: detail.noticeMessage || 'Your session has ended. Please sign in again.',
+            announceMessage: detail.announceMessage || 'Session expired. Please sign in again.',
+            clearCookie: detail.clearCookie !== false,
+        });
+    });
+
     if (isCompactTarget) {
         window.addEventListener('resize', applyResponsiveNavDensity);
     }
 
     // Avatar dropdown — visible only when logged in
 
-    if (avatarBtn && navDropdown) {
-        avatarBtn.setAttribute('aria-haspopup', 'menu');
-        avatarBtn.setAttribute('aria-expanded', 'false');
-        navDropdown.setAttribute('role', 'menu');
-        navDropdown.setAttribute('aria-hidden', 'true');
-
-        let lastFocusedElement = null;
-
-        const getFocusableMenuItems = () => {
-            return Array.from(navDropdown.querySelectorAll('a[href], button:not([disabled])'))
-                .filter((element) => !element.classList.contains('hidden') && element.getAttribute('aria-hidden') !== 'true');
-        };
-
-        const focusMenuEdge = (edge = 'first') => {
-            const focusable = getFocusableMenuItems();
-            if (!focusable.length) return;
-            if (edge === 'last') {
-                focusable[focusable.length - 1].focus();
-                return;
-            }
-            focusable[0].focus();
-        };
-
-        const moveMenuFocus = (direction = 1) => {
-            const focusable = getFocusableMenuItems();
-            if (!focusable.length) return;
-
-            const active = document.activeElement;
-            const currentIndex = focusable.indexOf(active);
-            const baseIndex = currentIndex === -1 ? (direction > 0 ? -1 : 0) : currentIndex;
-            const nextIndex = (baseIndex + direction + focusable.length) % focusable.length;
-            focusable[nextIndex].focus();
-        };
-
-        const isDropdownOpen = () => navDropdown.classList.contains('open');
-
-        const closeDropdown = () => {
-            if (!isDropdownOpen()) return;
-            navDropdown.classList.remove('open');
-            avatarBtn.setAttribute('aria-expanded', 'false');
-            navDropdown.setAttribute('aria-hidden', 'true');
-            if (lastFocusedElement === avatarBtn || !lastFocusedElement) {
-                avatarBtn.focus();
-            }
-            lastFocusedElement = null;
-        };
-
-        const openDropdown = ({ focusFirst = false, focusLast = false } = {}) => {
-            if (isDropdownOpen()) return;
-            lastFocusedElement = document.activeElement;
-            navDropdown.classList.add('open');
-            avatarBtn.setAttribute('aria-expanded', 'true');
-            navDropdown.setAttribute('aria-hidden', 'false');
-            if (focusLast) {
-                focusMenuEdge('last');
-                return;
-            }
-            if (focusFirst) {
-                focusMenuEdge('first');
-            }
-        };
-
-        const toggleDropdown = ({ focusFirst = false } = {}) => {
-            if (isDropdownOpen()) {
-                closeDropdown();
-            } else {
-                openDropdown({ focusFirst });
-            }
-        };
-
-        avatarBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleDropdown();
-        });
-
-        avatarBtn.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                openDropdown({ focusFirst: true });
-            }
-            if (e.key === 'ArrowUp') {
-                e.preventDefault();
-                openDropdown({ focusLast: true });
-            }
-            if (e.key === 'Escape') {
-                e.preventDefault();
-                closeDropdown();
-            }
-        });
-
-        navDropdown.addEventListener('keydown', (e) => {
-            if (!isDropdownOpen()) return;
-            if (e.key === 'Escape') {
-                e.preventDefault();
-                closeDropdown();
-                return;
-            }
-
-            if (e.key === 'ArrowDown') {
-                e.preventDefault();
-                moveMenuFocus(1);
-                return;
-            }
-
-            if (e.key === 'ArrowUp') {
-                e.preventDefault();
-                moveMenuFocus(-1);
-                return;
-            }
-
-            if (e.key === 'Home') {
-                e.preventDefault();
-                focusMenuEdge('first');
-                return;
-            }
-
-            if (e.key === 'End') {
-                e.preventDefault();
-                focusMenuEdge('last');
-                return;
-            }
-
-            if (e.key !== 'Tab') return;
-
-            const focusable = getFocusableMenuItems();
-            if (!focusable.length) {
-                e.preventDefault();
-                avatarBtn.focus();
-                return;
-            }
-
-            const first = focusable[0];
-            const last = focusable[focusable.length - 1];
-            const active = document.activeElement;
-
-            if (e.shiftKey && active === first) {
-                e.preventDefault();
-                last.focus();
-            } else if (!e.shiftKey && active === last) {
-                e.preventDefault();
-                first.focus();
-            }
-        });
-
-        document.addEventListener('click', () => {
-            closeDropdown();
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeDropdown();
-        });
-        navDropdown.addEventListener('click', (e) => e.stopPropagation());
+    if (avatarBtn && navDropdown && typeof setupAuthAvatarDropdown === 'function') {
+        setupAuthAvatarDropdown(avatarBtn, navDropdown);
     }
 
     // ── Inbox unread badge polling ────────────────────────────────────────────
 
-    function updateInboxBadge() {
+    async function updateInboxBadge() {
         if (!isAuthenticated) return;
-        fetch(`${API_URL}/messages/unread-count`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        })
-        .then(r => {
-            if (r.status === 401) return { count: 0, unauthorized: true };
-            return r.ok ? r.json() : null;
-        })
-        .then(data => {
-            if (!data) return;
-            if (data.unauthorized) {
-                isAuthenticated = false;
-                document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-                stopUnreadPolling();
-                syncAuthVisibility();
-                showSessionNotice('Your session has ended. Sign in again to keep receiving unread message updates.');
-                announceNav('Session expired. Please sign in again to check unread messages.');
+        try {
+            const response = await fetch(`${API_URL}/messages/unread-count`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            if (response.status === 401) {
+                forceSessionExpired({
+                    noticeMessage: 'Your session has ended. Sign in again to keep receiving unread message updates.',
+                    announceMessage: 'Session expired. Please sign in again to check unread messages.',
+                });
                 return;
             }
+
+            if (!response.ok) return;
+
+            const data = await response.json();
+            if (!data || typeof data.count !== 'number') return;
+
             const badge = document.getElementById('inbox-unread-badge');
             const menuCount = document.getElementById('inbox-menu-count');
             if (!badge && !menuCount) return;
@@ -420,32 +304,33 @@ document.addEventListener('DOMContentLoaded', () => {
             hasPolledInbox = true;
             previousInboxCount = unreadInboxCount;
             applyResponsiveNavDensity();
-        })
-        .catch(() => {});
+        } catch (err) {
+            // Ignore transient badge polling errors; core inbox handles user-facing feedback.
+        }
     }
 
     // ── Notification badge polling ────────────────────────────────────────────
 
-    function updateNotifBadge() {
+    async function updateNotifBadge() {
         if (!isAuthenticated) return;
-        fetch(`${API_URL}/notifications/unread-count`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        })
-        .then(r => {
-            if (r.status === 401) return { count: 0, unauthorized: true };
-            return r.ok ? r.json() : null;
-        })
-        .then(data => {
-            if (!data) return;
-            if (data.unauthorized) {
-                isAuthenticated = false;
-                document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-                stopUnreadPolling();
-                syncAuthVisibility();
-                showSessionNotice('Your session has ended. Sign in again to keep receiving notification updates.');
-                announceNav('Session expired. Please sign in again to check notifications.');
+        try {
+            const response = await fetch(`${API_URL}/notifications/unread-count`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            if (response.status === 401) {
+                forceSessionExpired({
+                    noticeMessage: 'Your session has ended. Sign in again to keep receiving notification updates.',
+                    announceMessage: 'Session expired. Please sign in again to check notifications.',
+                });
                 return;
             }
+
+            if (!response.ok) return;
+
+            const data = await response.json();
+            if (!data || typeof data.count !== 'number') return;
+
             const badge = document.getElementById('notif-badge');
             const menuCount = document.getElementById('notif-menu-count');
             if (!badge && !menuCount) return;
@@ -485,15 +370,29 @@ document.addEventListener('DOMContentLoaded', () => {
             hasPolledNotif = true;
             previousNotifCount = unreadNotifCount;
             applyResponsiveNavDensity();
-        })
-        .catch(() => {});
+        } catch (err) {
+            // Ignore transient badge polling errors; core notifications page handles user-facing feedback.
+        }
     }
 
     if (isAuthenticated) {
-        updateInboxBadge();
-        inboxPollInterval = setInterval(updateInboxBadge, 30000);
-        updateNotifBadge();
-        notifPollInterval = setInterval(updateNotifBadge, 30000);
+        const bootstrapUnreadPolling = async () => {
+            await updateInboxBadge();
+            if (!isAuthenticated) return;
+
+            await updateNotifBadge();
+            if (!isAuthenticated) return;
+
+            inboxPollInterval = setInterval(() => {
+                void updateInboxBadge();
+            }, 30000);
+
+            notifPollInterval = setInterval(() => {
+                void updateNotifBadge();
+            }, 30000);
+        };
+
+        void bootstrapUnreadPolling();
     }
 
 });

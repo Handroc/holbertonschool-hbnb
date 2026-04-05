@@ -1,0 +1,30 @@
+/* ===== DESTRUCTIVE BUTTON ===== */
+.btn--danger,
+.btn-danger,
+.delete-button {
+    background: var(--red);
+    color: #fff;
+    border-radius: var(--radius);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-sm) var(--space-md);
+    border: none;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--transition), transform 0.15s ease;
+}
+
+.btn--danger:active,
+.btn-danger:active,
+.delete-button:active {
+    transform: scale(0.96);
+}
+
+.btn--danger:hover,
+.btn-danger:hover,
+.delete-button:hover {
+    background: var(--red-dark);
+}
+
