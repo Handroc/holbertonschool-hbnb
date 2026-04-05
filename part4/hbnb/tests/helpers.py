@@ -20,6 +20,7 @@ class APITestCase(unittest.TestCase):
             TESTING = True
             SQLALCHEMY_DATABASE_URI = f"sqlite:///{self.db_path}"
             SQLALCHEMY_TRACK_MODIFICATIONS = False
+            JWT_DECODE_LEEWAY = 2
 
         self.app = create_app(TestConfig)
         self.app_context = self.app.app_context()
